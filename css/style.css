@@ -4,11 +4,18 @@
     box-sizing: border-box;
 }
 
+
 body {
     background: #0a0a0a;
     color: #ffffff;
     font-family: Arial, sans-serif;
 }
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 
 .site-header {
     display: flex;
@@ -18,6 +25,13 @@ body {
     border-bottom: 1px solid #222;
 }
 
+.logo {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
 .nav-links {
     display: flex;
     gap: 30px;
@@ -25,14 +39,41 @@ body {
 
 .nav-links a {
     color: #ffffff;
-    text-decoration: none;
     font-size: 14px;
     letter-spacing: 1px;
+    transition: color 0.2s ease;
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links .active {
     color: #888;
 }
+
+
+.button {
+    display: inline-block;
+    padding: 14px 28px;
+    background: #ffffff;
+    color: #000000;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: background 0.2s ease;
+}
+
+.button:hover {
+    background: #cccccc;
+}
+
+
+.section-label {
+    margin-bottom: 15px;
+    color: #666;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
 
 .hero {
     min-height: 70vh;
@@ -40,36 +81,22 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
     padding: 40px 20px;
+    text-align: center;
 }
 
 .hero h1 {
+    margin-bottom: 20px;
     font-size: 80px;
     letter-spacing: 8px;
-    margin-bottom: 20px;
 }
 
-.hero p {
+.hero > p:not(.section-label) {
+    margin-bottom: 30px;
     color: #888;
     font-size: 18px;
-    margin-bottom: 30px;
 }
 
-.button {
-    padding: 14px 28px;
-    background: #ffffff;
-    color: #000000;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
-
-.button:hover {
-    background: #cccccc;
-}
 
 .features {
     display: flex;
@@ -80,8 +107,8 @@ body {
 .features article {
     flex: 1;
     padding: 30px;
-    border: 1px solid #222;
     background: #111;
+    border: 1px solid #222;
 }
 
 .features h2 {
@@ -90,6 +117,275 @@ body {
 }
 
 .features p {
+    margin-bottom: 20px;
     color: #888;
     line-height: 1.6;
+}
+
+.feature-link {
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.feature-link:hover {
+    color: #888;
+}
+
+
+.missions {
+    padding: 100px 60px;
+}
+
+.missions-header {
+    max-width: 700px;
+    margin-bottom: 60px;
+}
+
+.missions-header h1 {
+    margin-bottom: 20px;
+    font-size: 64px;
+    letter-spacing: 6px;
+}
+
+.section-description {
+    color: #888;
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+
+.missions-grid {
+    display: flex;
+    gap: 20px;
+}
+
+.mission-card {
+    flex: 1;
+    min-height: 390px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    background: #111;
+    border: 1px solid #222;
+
+    transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.mission-card:hover {
+    border-color: #444;
+    transform: translateY(-4px);
+}
+
+
+.mission-number {
+    color: #555;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+.mission-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.mission-category {
+    margin-bottom: 12px;
+    color: #666;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.mission-content h2 {
+    margin-bottom: 15px;
+    font-size: 28px;
+}
+
+.mission-description {
+    margin-bottom: 25px;
+    color: #888;
+    line-height: 1.6;
+}
+
+
+.mission-meta {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    color: #777;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.difficulty {
+    padding: 6px 10px;
+    border: 1px solid #333;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.easy {
+    color: #aaa;
+}
+
+.medium {
+    color: #ccc;
+}
+
+.hard {
+    color: #fff;
+}
+
+
+@media (max-width: 900px) {
+
+    .features,
+    .missions-grid {
+        flex-direction: column;
+    }
+
+    .mission-card {
+        min-height: auto;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .site-header {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .nav-links {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero h1 {
+        font-size: 52px;
+        letter-spacing: 5px;
+    }
+
+    .features,
+    .missions {
+        padding: 60px 20px;
+    }
+
+    .missions-header h1 {
+        font-size: 44px;
+    }
+}
+
+
+.mission-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 100px 60px;
+}
+
+
+.mission-header {
+    margin-bottom: 80px;
+}
+
+.mission-header h1 {
+    margin: 15px 0 20px;
+    font-size: 64px;
+    letter-spacing: 5px;
+}
+
+.mission-header .mission-number {
+    color: #555;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+.mission-header .mission-category {
+    margin-top: 20px;
+}
+
+
+.mission-section {
+    margin-bottom: 60px;
+}
+
+.mission-section h2 {
+    margin-bottom: 20px;
+    font-size: 16px;
+    letter-spacing: 3px;
+}
+
+.mission-section > p {
+    max-width: 750px;
+    color: #888;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+
+
+.log-box {
+    padding: 25px;
+    overflow-x: auto;
+    background: #050505;
+    border: 1px solid #222;
+}
+
+.log-box pre {
+    margin-bottom: 8px;
+    color: #aaa;
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+
+.mission-section input {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px 0;
+    padding: 15px;
+    background: #111;
+    color: #ffffff;
+    border: 1px solid #333;
+    outline: none;
+    font-size: 14px;
+}
+
+.mission-section input:focus {
+    border-color: #666;
+}
+
+
+
+@media (max-width: 600px) {
+
+    .mission-page {
+        padding: 60px 20px;
+    }
+
+    .mission-header h1 {
+        font-size: 42px;
+    }
+
+    .log-box {
+        padding: 15px;
+    }
+
+    .log-box pre {
+        font-size: 12px;
+    }
 }

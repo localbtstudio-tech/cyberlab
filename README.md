@@ -5,16 +5,15 @@
 </p>
 
 <p align="center">
-  <strong>HTML · CSS · JavaScript · PHP · Cybersecurity</strong>
+  <strong>HTML · CSS · Cybersecurity · Mission-Based Learning</strong>
 </p>
 
 <p align="center">
 
 ![HTML5](https://img.shields.io/badge/HTML5-Structure-orange?logo=html5\&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-Design-blue?logo=css3\&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-Interaction-yellow?logo=javascript\&logoColor=black)
-![PHP](https://img.shields.io/badge/PHP-Backend-purple?logo=php\&logoColor=white)
-![Version](https://img.shields.io/badge/Version-V1-green)
+![Responsive](https://img.shields.io/badge/Responsive-Yes-green)
+![Version](https://img.shields.io/badge/Version-V1-blue)
 ![Status](https://img.shields.io/badge/Status-In%20Development-yellow)
 
 </p>
@@ -23,55 +22,49 @@
 
 ## ◼︎ Project Overview
 
-**CYBERLAB** is an interactive cybersecurity learning platform designed around **Missions, Evidence, Questions, Tools and Progress**.
+**CYBERLAB** is a cybersecurity learning platform built around interactive **Missions, Evidence and Investigation**.
 
-The project is being developed progressively, starting with a lightweight frontend foundation and evolving toward a more complete cybersecurity learning environment.
+Instead of simply presenting cybersecurity information, the project is designed to let users investigate simulated security incidents and solve challenges based on the evidence provided.
 
-The core idea is simple:
+The current version focuses on building the **frontend foundation** of the platform.
 
-> **Learn cybersecurity by investigating problems, analyzing evidence and solving missions.**
+```text
+CYBERLAB
+│
+├── HOME
+│
+├── MISSIONS
+│
+└── MISSION
+     │
+     ├── Scenario
+     ├── Evidence
+     └── Question
+```
 
-The architecture and roadmap are intentionally flexible and may change as the project develops.
+The project is being developed progressively, with future versions planned to introduce JavaScript interaction, PHP, databases, authentication and eventually Python-based security tools.
 
 ---
 
 # ✦ Current Version — V1
 
-V1 focuses on building the foundation of the CyberLab platform.
+The current V1 contains the first functional structure of CyberLab:
 
 ```text
-CYBERLAB V1
+V1
 │
-├── Home
-├── Missions
+├── Home Page
+├── Missions Page
 ├── Mission Details
-└── About
+├── Cybersecurity Scenario
+├── Evidence / Logs
+├── Question Interface
+└── Responsive Layout
 ```
-
-### Current Technologies
-
-```text
-HTML
-CSS
-JavaScript
-PHP
-```
-
-The current foundation does **not** require:
-
-```text
-MySQL
-Login System
-Node.js
-Python Backend
-Frameworks
-```
-
-These technologies may be introduced later when the project actually requires them.
 
 ---
 
-# 🏠 Home
+# 🏠 Home Page
 
 The homepage introduces the CyberLab experience.
 
@@ -79,6 +72,8 @@ The homepage introduces the CyberLab experience.
 ┌──────────────────────────────────────────────┐
 │ CYBERLAB        HOME  MISSIONS  ABOUT       │
 ├──────────────────────────────────────────────┤
+│                                              │
+│            CYBERSECURITY LAB                 │
 │                                              │
 │                 CYBERLAB                     │
 │                                              │
@@ -94,687 +89,279 @@ The homepage introduces the CyberLab experience.
 └──────────────────────────────────────────────┘
 ```
 
-The current implementation contains:
+### Current sections
 
 * CyberLab branding
-* Main navigation
+* Navigation
 * Hero section
-* Call-to-action button
+* `ENTER THE LAB` CTA
 * Missions introduction
 * Tools introduction
 * Learning introduction
+
+The **ENTER THE LAB** button currently leads to the Missions page.
 
 ---
 
 # 🧩 Missions
 
-The main concept behind CyberLab is the **Mission**.
+The Missions page presents available cybersecurity challenges.
 
-A mission presents a cybersecurity scenario that requires the user to investigate evidence and answer questions.
-
-Example:
+Current missions:
 
 ```text
 MISSION 01
 Suspicious Login
-
-Difficulty: Easy
-Category: Log Analysis
-
-[ START MISSION ]
+LOG ANALYSIS
+EASY
+100 XP
 ```
-
-Another mission could be:
 
 ```text
 MISSION 02
 Hidden IOC
-
-Difficulty: Medium
-Category: Threat Detection
-
-[ START MISSION ]
+THREAT DETECTION
+MEDIUM
+250 XP
 ```
-
-And later:
 
 ```text
 MISSION 03
 Compromised Server
+INCIDENT RESPONSE
+HARD
+500 XP
+```
 
-Difficulty: Hard
-Category: Incident Response
+Each mission card contains:
 
-[ START MISSION ]
+```text
+Mission Number
+      │
+      ▼
+Category
+      │
+      ▼
+Title
+      │
+      ▼
+Description
+      │
+      ▼
+Difficulty + XP
+      │
+      ▼
+START MISSION
 ```
 
 ---
 
-# 🔎 Mission Structure
+# 🔎 Mission Details
 
-The intended V1 mission flow is:
+The first implemented mission is:
 
 ```text
-Mission
-   │
-   ▼
-Scenario
-   │
-   ▼
-Evidence
-   │
-   ▼
-Investigation
-   │
-   ▼
-Question
-   │
-   ▼
-Answer
-   │
-   ▼
-Score
+MISSION 01
+SUSPICIOUS LOGIN
 ```
 
-Example:
+Category:
 
 ```text
-MISSION 01 — Suspicious Login
+LOG ANALYSIS
+```
 
-Scenario:
-A company noticed unusual login activity.
+Difficulty:
 
-Evidence:
+```text
+EASY
+```
 
-[ access.log ]
+Reward:
 
+```text
+100 XP
+```
+
+---
+
+# 🧠 Mission Flow
+
+The current mission follows the first version of the CyberLab investigation concept:
+
+```text
+MISSION
+   │
+   ▼
+SCENARIO
+   │
+   ▼
+EVIDENCE
+   │
+   ▼
+QUESTION
+   │
+   ▼
+ANSWER
+```
+
+The user first reads the scenario, examines the provided evidence and then attempts to identify the suspicious IP address.
+
+---
+
+# 📖 Scenario
+
+The current mission presents a simulated security incident:
+
+```text
+A company detected unusual login activity
+on one of its internal systems.
+
+Investigate the login records and identify
+the suspicious IP address.
+```
+
+The purpose is to introduce the user to basic **Log Analysis** and suspicious login detection.
+
+---
+
+# 📄 Evidence
+
+The mission provides simulated login records:
+
+```text
 192.168.1.10 - admin - 10:32
+192.168.1.11 - user  - 10:35
 192.168.1.11 - user  - 10:35
 45.23.XX.XX  - admin - 03:41
 45.23.XX.XX  - admin - 03:42
-
-Question:
-
-Which IP is suspicious?
-
-[____________]
-
-[ SUBMIT ]
 ```
 
-The goal is to make the user **investigate the evidence**, rather than simply read cybersecurity information.
-
----
-
-# 🧠 Learning Philosophy
-
-CyberLab is designed around:
+The evidence is displayed inside a dedicated log interface:
 
 ```text
-LEARN
-  │
-  ▼
-UNDERSTAND
-  │
-  ▼
-INVESTIGATE
-  │
-  ▼
-SOLVE
-  │
-  ▼
-LEARN FROM THE RESULT
+┌──────────────────────────────────────────────┐
+│ 192.168.1.10 - admin - 10:32                │
+│ 192.168.1.11 - user  - 10:35                │
+│ 192.168.1.11 - user  - 10:35                │
+│ 45.23.XX.XX  - admin - 03:41                │
+│ 45.23.XX.XX  - admin - 03:42                │
+└──────────────────────────────────────────────┘
 ```
 
-Instead of creating a traditional educational website, the project aims to connect cybersecurity concepts with practical investigation.
-
----
-
-# 🟢 V1.1 — Interaction
-
-The next planned iteration can introduce JavaScript-powered interaction.
-
-Possible features:
+This creates the foundation for future evidence types such as:
 
 ```text
-Mission Selection
-Answer Validation
-Score
-Hints
-Show / Hide Evidence
-Session Progress
-Dynamic UI
-```
-
-Example:
-
-```text
-Correct! +100 XP
-```
-
-Or:
-
-```text
-Wrong answer.
-
-Hint:
-Look at the login time.
-```
-
-PHP may also begin handling simple server-side operations.
-
-```text
-JavaScript
-    │
-    ▼
-Submit Answer
-    │
-    ▼
-PHP
-    │
-    ▼
-Validate Answer
-    │
-    ▼
-Return Result
-```
-
-No database is required at this stage.
-
----
-
-# 🟡 V2 — Real Platform
-
-A future V2 may introduce a real backend and persistent user data.
-
-Possible technologies:
-
-```text
-HTML
-CSS
-JavaScript
-PHP
-MySQL
-```
-
-Possible database structure:
-
-```text
-users
-missions
-questions
-answers
-progress
-scores
-```
-
-Example:
-
-```text
-users
-----------------
-id
-username
-email
-password
-created_at
-```
-
-```text
-missions
-----------------
-id
-title
-description
-difficulty
-category
-points
-```
-
-```text
-progress
-----------------
-id
-user_id
-mission_id
-score
-completed
-completed_at
+Access Logs
+Authentication Logs
+System Logs
+Network Data
+File Hashes
+IOC Data
 ```
 
 ---
 
-# 🔐 V2.1 — Authentication
+# ❓ Question
 
-A future authentication system may introduce:
-
-```text
-Register
-Login
-Logout
-Dashboard
-```
-
-The dashboard could display:
+The current mission asks:
 
 ```text
-Welcome, User
-
-Missions completed
-████████░░ 80%
-
-XP
-1250
-
-Completed
-12 / 20
-
-Current level
-Cyber Analyst
+Which IP address is suspicious?
 ```
 
-Potential security concepts practiced:
+The user can enter an answer through the input field:
 
-* Password hashing
-* Sessions
-* Authentication
-* Authorization
-* Input validation
-* SQL Injection prevention
-* CSRF basics
-* Secure PHP practices
+```text
+┌──────────────────────────────────────┐
+│ Enter your answer                    │
+└──────────────────────────────────────┘
 
-These features are **planned concepts**, not part of the current V1 implementation.
+[ SUBMIT ANSWER ]
+```
+
+### Current limitation
+
+The answer field and submit button are currently **frontend only**.
+
+There is no JavaScript validation or PHP backend yet.
+
+The next development stage will connect the interface to actual answer validation.
 
 ---
 
-# 📚 V3 — Learning System
+# 🎨 Design
 
-A future Learning section could connect theory with practical missions.
-
-```text
-LEARN
-   │
-   ▼
-CONCEPT
-   │
-   ▼
-EXAMPLE
-   │
-   ▼
-LAB
-   │
-   ▼
-MISSION
-```
-
-Possible categories:
+CyberLab currently follows a minimal dark interface.
 
 ```text
-Networking
-Linux
-Web Security
-Cryptography
-Authentication
-OSINT
-Log Analysis
-Incident Response
-Threat Intelligence
+Background
+#0a0a0a
+
+Cards
+#111
+
+Borders
+#222
+
+Primary Text
+#ffffff
+
+Secondary Text
+#888
 ```
 
-Example:
+The design focuses on:
 
-```text
-SQL Injection
-      │
-      ▼
-    Learn
-      │
-      ▼
-Interactive Example
-      │
-      ▼
-   Mini Lab
-      │
-      ▼
-   Mission
-```
+* Minimal UI
+* Dark cybersecurity aesthetic
+* Strong typography
+* Large headings
+* Simple navigation
+* Clear mission hierarchy
+* Evidence readability
+* Responsive layouts
 
 ---
 
-# 🐍 V4 — Python Security Engine
+# 📱 Responsive Design
 
-Python may eventually become the project's **Security Engine**.
+The interface includes responsive breakpoints for smaller screens.
 
-The purpose would be to use Python where it provides a genuine security-analysis capability, rather than adding it simply because the project is cybersecurity-related.
-
-```text
-                  CYBERLAB
-                     │
-          ┌──────────┴──────────┐
-          │                     │
-        PHP                   Python
-          │                     │
-      Web App             Security Engine
-          │                     │
-          └──────────┬──────────┘
-                     │
-                  Results
-```
-
-Possible Python capabilities:
-
-### Log Analysis
+Desktop:
 
 ```text
-access.log
-    │
-    ▼
- Python
-    │
-    ▼
-Suspicious IP Detection
-    │
-    ▼
- Findings
+┌───────────────┬───────────────┬───────────────┐
+│   MISSION 01  │   MISSION 02  │   MISSION 03  │
+└───────────────┴───────────────┴───────────────┘
 ```
 
-### IOC Detection
+Mobile:
 
 ```text
-IP
-Hash
-Domain
-URL
- │
- ▼
-Python
- │
- ▼
-IOC Analysis
+┌───────────────────────┐
+│       MISSION 01      │
+├───────────────────────┤
+│       MISSION 02      │
+├───────────────────────┤
+│       MISSION 03      │
+└───────────────────────┘
 ```
 
-### File Hashing
-
-```text
-File
- │
- ▼
-SHA-256
- │
- ▼
-Hash Analysis
-```
-
-### Threat Intelligence
-
-```text
-IP
- │
- ▼
-Threat Intelligence API
- │
- ▼
-Reputation
- │
- ▼
-CyberLab
-```
+The Missions layout switches from horizontal cards to a vertical layout on smaller screens.
 
 ---
 
-# 🛠️ V5 — Security Tools
-
-A future **TOOLS** section could provide practical security utilities.
-
-```text
-┌─────────────────────────────┐
-│ SECURITY TOOLS              │
-├─────────────────────────────┤
-│                             │
-│ IP Analyzer                 │
-│ Hash Analyzer               │
-│ Log Analyzer                │
-│ Password Strength Checker   │
-│ Encoding / Decoding         │
-│ IOC Checker                 │
-│                             │
-└─────────────────────────────┘
-```
-
-Simple utilities may be implemented using JavaScript or PHP, while more advanced security-analysis tools could use the Python Security Engine.
-
----
-
-# 🔴 V6 — Advanced Missions
-
-Future missions may become more similar to small **CTF-style investigations**.
-
-Example:
-
-```text
-MISSION — COMPROMISED SERVER
-```
-
-The user could receive:
-
-```text
-access.log
-auth.log
-system.log
-network.txt
-```
-
-The investigation could require identifying:
-
-```text
-1. Initial Attack
-2. Suspicious IP
-3. Compromised Account
-4. Persistence Mechanism
-5. Attack Timeline
-```
-
-The mission would then produce:
-
-```text
-FINAL ANSWER
-     │
-     ▼
-Validation
-     │
-     ▼
-Score
-     │
-     ▼
-Explanation
-```
-
----
-
-# 🏆 V7 — Progress & Gamification
-
-Once users and scores exist, CyberLab could introduce a progression system.
-
-Possible features:
-
-```text
-XP
-Levels
-Achievements
-Badges
-Completed Missions
-Leaderboard
-```
-
-Example:
-
-```text
-LEADERBOARD
-
-#   USER          XP
-
-01  CyberFox      4820
-02  RootHunter    4510
-03  ByteGhost     4210
-04  ...
-```
-
-The exact design and mechanics may change during development.
-
----
-
-# 🚀 V8+ — Advanced CyberLab
-
-The long-term direction may include advanced cybersecurity labs.
-
-Possible areas:
-
-```text
-Web Security
-Network Security
-Digital Forensics
-Threat Intelligence
-Incident Response
-Cryptography
-Malware Analysis
-Secure Coding
-```
-
-Possible difficulty levels:
-
-```text
-Easy
-Medium
-Hard
-Expert
-```
-
-Possible mission architecture:
-
-```text
-Scenario
-    │
-    ▼
-Evidence
-    │
-    ▼
-Investigation
-    │
-    ▼
-Hints
-    │
-    ▼
-Questions
-    │
-    ▼
-Automated Validation
-    │
-    ▼
-Score
-    │
-    ▼
-Explanation
-```
-
----
-
-# 🧰 Technology Strategy
-
-CyberLab will not use every technology simply for the sake of using it.
-
-Each technology should have a real purpose.
-
-| Technology   | Intended Role                  |
-| ------------ | ------------------------------ |
-| HTML         | Structure                      |
-| CSS          | UI / Design                    |
-| JavaScript   | Interaction                    |
-| PHP          | Backend                        |
-| MySQL        | Persistent Data                |
-| Python       | Security Engine                |
-| Git / GitHub | Version Control                |
-| Linux        | Security Labs                  |
-| APIs         | Threat Intelligence            |
-| Node.js      | Real-time features if required |
-| C            | Secure Coding / Low-level Labs |
-| C#           | Windows / Security Labs later  |
-
-The stack is **not fixed** and may evolve as the project grows.
-
----
-
-# 🗺️ Development Roadmap
-
-```text
-V1
- │
- ├── Website Foundation
- │
- ▼
-V1.1
- │
- ├── JavaScript Interaction
- ├── Answer Validation
- ├── Score
- └── Hints
- │
- ▼
-V2
- │
- ├── PHP Backend
- ├── MySQL
- └── User System
- │
- ▼
-V2.1
- │
- ├── Authentication
- └── Dashboard
- │
- ▼
-V3
- │
- └── Learning System
- │
- ▼
-V4
- │
- └── Python Security Engine
- │
- ▼
-V5
- │
- └── Security Tools
- │
- ▼
-V6
- │
- └── Advanced Missions
- │
- ▼
-V7
- │
- └── Gamification
- │
- ▼
-V8+
- │
- └── Advanced CyberLab
-```
-
-> **Roadmap Status:** This roadmap is a development blueprint, not a fixed specification. Features, technologies and version boundaries may change as CyberLab evolves.
-
----
-
-# 📁 Current Project Structure
-
-The current V1 foundation is intentionally simple:
+# 🗂️ Current Project Structure
 
 ```text
 CYBERLAB/
 │
 ├── index.html
+│
+├── missions.html
+│
+├── mission.html
 │
 ├── css/
 │   └── style.css
@@ -782,102 +369,221 @@ CYBERLAB/
 └── README.md
 ```
 
-As development progresses, the structure will expand with JavaScript, PHP, missions, backend components and other resources when they are actually needed.
+### Files
+
+| File            | Purpose                              |
+| --------------- | ------------------------------------ |
+| `index.html`    | CyberLab homepage                    |
+| `missions.html` | Mission listing                      |
+| `mission.html`  | Mission 01 details                   |
+| `css/style.css` | Global styling and responsive layout |
+| `README.md`     | Project documentation                |
 
 ---
 
-# 🎯 Current Goal
-
-The immediate goal is **not** to build the entire platform at once.
-
-The current development target is:
+# 🧱 Current Architecture
 
 ```text
-HOME
-  │
-  ▼
-MISSIONS
-  │
-  ▼
-MISSION DETAILS
-  │
-  ▼
-EVIDENCE
-  │
-  ▼
-QUESTION
-  │
-  ▼
-ANSWER
-  │
-  ▼
-SCORE
+                    CYBERLAB
+                       │
+          ┌────────────┼────────────┐
+          │            │            │
+          ▼            ▼            ▼
+        HOME        MISSIONS      MISSION
+                                   │
+                          ┌────────┼────────┐
+                          │        │        │
+                          ▼        ▼        ▼
+                       SCENARIO  EVIDENCE QUESTION
 ```
 
-Each version should introduce a **real new capability**.
+---
+
+# 🧰 Technologies
+
+### Current
+
+* **HTML5** — Page structure
+* **CSS3** — Styling and responsive layout
+
+### Planned
+
+* **JavaScript** — Mission interaction and answer validation
+* **PHP** — Server-side logic
+* **MySQL** — User and mission data
+* **Python** — Security analysis engine
+
+The technology stack is intentionally introduced progressively.
+
+---
+
+# 🗺️ Development Roadmap
 
 ```text
-V1  → Website Foundation
-V2  → Web Application
-V3  → Learning Platform
-V4  → Security Engine
-V5  → Security Tools
-V6  → Advanced Cyber Labs
-V7  → Gamification
-V8+ → Advanced Cybersecurity Platform
+V1 — FOUNDATION
+│
+├── Home                         ✅
+├── Missions                     ✅
+├── Mission Details              ✅
+├── Scenario                     ✅
+├── Evidence                     ✅
+├── Question UI                  ✅
+└── Responsive Design            ✅
+│
+▼
+V1.1 — INTERACTION
+│
+├── JavaScript
+├── Answer Validation
+├── Score
+├── Hints
+├── Dynamic Evidence
+└── Session Progress
+│
+▼
+V2 — REAL PLATFORM
+│
+├── PHP Backend
+├── MySQL
+├── Users
+├── Missions
+└── Progress
+│
+▼
+V2.1 — AUTHENTICATION
+│
+├── Register
+├── Login
+├── Logout
+└── Dashboard
+│
+▼
+V3 — LEARNING SYSTEM
+│
+└── Concepts → Labs → Missions
+│
+▼
+V4 — PYTHON SECURITY ENGINE
+│
+├── Log Analysis
+├── IOC Detection
+├── File Hashing
+└── Threat Intelligence
+│
+▼
+V5 — SECURITY TOOLS
+│
+├── IP Analyzer
+├── Hash Analyzer
+├── Log Analyzer
+├── IOC Checker
+└── Encoding / Decoding
+│
+▼
+V6+ — ADVANCED CYBER LABS
+│
+├── Incident Response
+├── Digital Forensics
+├── Threat Intelligence
+├── Advanced Missions
+└── Gamification
 ```
+
+> **Roadmap note:** Future versions are a development blueprint and may change as the project evolves.
+
+---
+
+# 🎯 Current Development Goal
+
+The immediate goal is to transform the current static mission into an interactive investigation.
+
+```text
+CURRENT
+│
+├── Scenario
+├── Evidence
+└── Question UI
+      │
+      ▼
+NEXT
+│
+├── Answer Validation
+├── Correct / Wrong Feedback
+├── Hints
+└── Score
+      │
+      ▼
+LATER
+│
+├── PHP
+├── Database
+├── User Accounts
+└── Persistent Progress
+```
+
+The focus is on adding **real functionality one step at a time**.
 
 ---
 
 # 🧠 Why I Built This
 
-CyberLab is a long-term project designed to combine several areas I am learning:
+CyberLab is a long-term project combining my interests in **Web Development and Cybersecurity**.
+
+The project is designed to grow alongside the technologies I am learning.
 
 ```text
-Web Development
-       │
-       ├── HTML
-       ├── CSS
-       ├── JavaScript
-       └── PHP
-       │
-       ▼
-Backend Development
-       │
-       ├── MySQL
-       └── Authentication
-       │
-       ▼
+HTML
+ │
+ ▼
+CSS
+ │
+ ▼
+JavaScript
+ │
+ ▼
+PHP
+ │
+ ▼
+MySQL
+ │
+ ▼
 Python
-       │
-       ▼
-Security Automation
-       │
-       ▼
-Cybersecurity
+ │
+ ▼
+Cybersecurity Automation
 ```
 
-The objective is to build each part when there is a **real reason for it**, rather than forcing technologies into the project.
+The goal is not to add technologies unnecessarily.
+
+Each technology will be introduced when it solves an actual problem in the platform.
 
 ---
 
-# 🛠️ Current Technologies
+# 🔐 Cybersecurity Direction
 
-### V1
+The long-term objective is to make CyberLab more than a traditional website.
 
-* HTML5
-* CSS3
-* JavaScript — planned for interaction
-* PHP — planned for simple backend functionality
+The platform is intended to eventually combine:
 
-### Future
+```text
+        CYBERLAB
+           │
+   ┌───────┼────────┐
+   │       │        │
+ LEARN   MISSIONS  TOOLS
+   │       │        │
+   └───────┼────────┘
+           │
+      SECURITY ENGINE
+           │
+         Python
+           │
+   ┌───────┼────────┐
+   │       │        │
+ Logs     IOC    Threat Intel
+```
 
-* MySQL
-* Python
-* Linux
-* Security APIs
-* Node.js when required
-* Additional technologies depending on project needs
+This would allow users to learn a concept, investigate evidence, use security tools and solve increasingly difficult cybersecurity missions.
 
 ---
 
