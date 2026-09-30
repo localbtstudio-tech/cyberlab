@@ -11,18 +11,17 @@
   <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
   <img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white">
-  <img src="https://img.shields.io/badge/Status-V2.0%20In%20Progress-111111?style=for-the-badge">
 </p>
 
 ---
 
 ## ◼︎ About
 
-**CYBERLAB** is an interactive cybersecurity learning platform built around practical missions.
+**CYBERLAB** is an interactive cybersecurity learning platform built around practical investigation missions.
 
-Users investigate evidence, answer cybersecurity questions, use hints, and receive XP based on their performance.
+Users analyze evidence, answer questions, use hints, and earn XP based on their performance.
 
-The project is developed progressively. Each version introduces a new layer of technology and functionality for a specific learning purpose.
+The project is developed progressively, introducing new technologies only when they have a practical purpose.
 
 ---
 
@@ -30,17 +29,17 @@ The project is developed progressively. Each version introduces a new layer of t
 
 V2.0 introduces the first **Backend layer** to CYBERLAB.
 
-In V1, answer validation happened entirely inside the user's browser:
+### V1
 
 ```text
 Browser
    ↓
 JavaScript
    ↓
-Check Answer
+Answer Validation
 ```
 
-In V2.0, the answer is sent to a PHP backend:
+### V2.0
 
 ```text
 Browser
@@ -53,509 +52,122 @@ PHP
    ↓
 Validate Answer
    ↓
-JSON Response
+JSON
    ↓
 JavaScript
-   ↓
-Update UI
 ```
 
-The main goal of V2.0 is to understand practical **Client → Server communication**.
+The main goal of V2.0 is learning practical **Client → Server communication**.
 
 ---
 
-# 🔄 V1 → V2.0
+# ⚙️ V2.0 Features
 
-## V1 — Browser-Based Validation
+* PHP backend with `submit.php`
+* JavaScript `fetch()`
+* HTTP `POST` requests
+* PHP `$_POST`
+* JSON responses
+* Server-side answer validation
+* Frontend mission interaction
+* Hint system
+* XP calculation
+* Responsive design
 
-```text
-User
- │
- ▼
-Input Answer
- │
- ▼
-JavaScript
- │
- ▼
-Correct Answer
- │
- ▼
-Validation
- │
- ▼
-Result
-```
-
-The correct answer was stored directly in JavaScript.
-
-Example:
-
-```javascript
-const correctAnswer = "45.23.XX.XX";
-```
-
-This meant that the answer existed in the browser.
-
----
-
-## V2.0 — Server-Side Answer Validation
-
-The correct answer was moved to PHP:
-
-```php
-$correctAnswer = "45.23.XX.XX";
-```
-
-The browser no longer contains the answer inside the JavaScript validation logic.
-
-The new flow is:
-
-```text
-                    CYBERLAB V2.0
-
-┌──────────────┐
-│    Browser   │
-│              │
-│  User Answer │
-└──────┬───────┘
-       │
-       │ POST
-       ▼
-┌──────────────┐
-│    PHP       │
-│              │
-│ submit.php   │
-└──────┬───────┘
-       │
-       │ Validate
-       ▼
-┌──────────────┐
-│ JSON Response│
-└──────┬───────┘
-       │
-       ▼
-┌──────────────┐
-│ JavaScript   │
-│              │
-│ Update UI    │
-└──────────────┘
-```
-
-This is the main architectural change introduced in V2.0.
-
----
-
-# ⚙️ PHP Backend
-
-V2.0 introduces:
-
-```text
-php/
-└── submit.php
-```
-
-The PHP script is responsible for checking the submitted answer.
-
-Conceptually:
-
-```php
-$correctAnswer = "45.23.XX.XX";
-```
-
-The submitted answer is received through:
-
-```php
-$_POST["answer"]
-```
-
-The backend then determines whether the answer is correct.
-
----
-
-# 🌐 Client → Server Communication
-
-V2.0 introduces practical communication between the frontend and backend.
-
-JavaScript sends a request:
-
-```javascript
-fetch("php/submit.php", {
-    method: "POST"
-});
-```
-
-The flow is:
-
-```text
-JavaScript
-     │
-     │ HTTP Request
-     ▼
-  PHP Backend
-     │
-     │ Process Request
-     ▼
-  PHP Response
-     │
-     ▼
- JavaScript
-```
-
-This is the foundation for future server-based functionality.
-
----
-
-# 📡 HTTP POST
-
-The mission answer is sent using the HTTP `POST` method.
-
-Conceptually:
-
-```text
-POST
- │
- └── answer = userAnswer
-```
-
-PHP receives the value through:
-
-```php
-$_POST["answer"]
-```
-
-The simplified communication becomes:
-
-```text
-JavaScript
-    │
-    │ POST
-    │ answer=userAnswer
-    ▼
-PHP
-    │
-    │ $_POST["answer"]
-    ▼
-Validation
-```
-
-This introduces practical HTTP concepts into the project.
-
----
-
-# 📦 JSON Responses
-
-V2.0 also introduces **JSON** as the communication format between PHP and JavaScript.
-
-PHP can return a successful result such as:
-
-```php
-echo json_encode([
-    "correct" => true,
-    "message" => "CORRECT"
-]);
-```
-
-Or an incorrect result:
-
-```php
-echo json_encode([
-    "correct" => false,
-    "message" => "WRONG"
-]);
-```
-
-JavaScript receives the response with:
-
-```javascript
-const data = await response.json();
-```
-
-The communication becomes:
-
-```text
-PHP
- │
- │ JSON
- ▼
-JavaScript
- │
- ▼
-data.correct
-data.message
-```
-
----
-
-# 🔒 Basic Server-Side Validation
-
-One of the important changes in V2.0 is that PHP now makes the answer validation decision.
+### Answer Flow
 
 ```text
 User Answer
      ↓
-Browser
+fetch()
      ↓
-POST Request
+POST / php/submit.php
      ↓
-PHP
+PHP Validation
      ↓
-Correct / Wrong
+JSON Response
      ↓
-JSON
-     ↓
-Browser
+Update UI
 ```
 
-This is an important improvement over V1 because the validation logic is no longer entirely dependent on the browser.
-
-### Current Limitation
-
-V2.0 is still a learning-stage backend.
-
-The **final XP calculation is currently handled by JavaScript**.
-
-Therefore:
-
-```text
-Answer Validation
-        ↓
-      PHP ✅
-
-Final XP Calculation
-        ↓
-   JavaScript ⚠️
-```
-
-A fully server-controlled scoring system will come later.
+The correct answer is now stored in PHP instead of being exposed in the JavaScript validation logic.
 
 ---
 
-# 🧪 Mission Interaction
+# 🧪 Mission System
 
-The existing V1 mission system remains available in V2.0.
+Current missions:
 
-### Empty Answer
+| #  | Category          | Mission            | Difficulty |  XP |
+| -- | ----------------- | ------------------ | ---------- | --: |
+| 01 | Log Analysis      | Suspicious Login   | Easy       | 100 |
+| 02 | Threat Detection  | Hidden IOC         | Medium     | 250 |
+| 03 | Incident Response | Compromised Server | Hard       | 500 |
 
-```text
-⚠️ PLEASE ENTER AN ANSWER.
-```
-
-### Wrong Answer
-
-```text
-❌ WRONG ANSWER. TRY AGAIN.
-```
-
-### Correct Answer
+### Mission Flow
 
 ```text
-✅ CORRECT! MISSION COMPLETED.
-```
-
-The frontend continues to manage the visual state of the mission.
-
----
-
-# 💡 Hint System
-
-The V1 hint system remains part of the current project.
-
-```text
-SHOW HINT
-    ↓
-HINT #1
-    ↓
-SHOW HINT
-    ↓
-HINT #2
-    ↓
-NO MORE HINTS
-```
-
-Maximum available hints:
-
-```text
-2
-```
-
-The hint system also affects the XP calculation.
-
----
-
-# 🏆 XP System
-
-The current mission has a base reward of:
-
-```text
-100 XP
-```
-
-The current frontend scoring system is:
-
-| Hints Used |     XP |
-| ---------: | -----: |
-|          0 | 100 XP |
-|          1 |  75 XP |
-|          2 |  50 XP |
-
-Conceptually:
-
-```text
-Final Score =
-Mission Score - (Hints Used × Hint Penalty)
-```
-
-### Current Architecture
-
-```text
-PHP
- │
- └── Validates Answer
-
-JavaScript
- │
- └── Calculates Final XP
-```
-
-Moving score calculation to the backend is a future improvement.
-
----
-
-# 📄 Current Pages
-
-```text
-index.html
-missions.html
-mission.html
-```
-
-### Navigation
-
-```text
-HOME
-  ↓
-MISSIONS
-  ↓
-START MISSION
-  ↓
-MISSION DETAILS
+MISSION
+   ↓
+SCENARIO
+   ↓
+EVIDENCE
+   ↓
+QUESTION
+   ↓
+ANSWER
+   ↓
+VALIDATION
+   ↓
+XP
+   ↓
+COMPLETED
 ```
 
 ---
 
-# 🧪 Current Missions
+# 💡 Hint & XP System
 
-### Mission 01
-
-```text
-LOG ANALYSIS
-Suspicious Login
-EASY
-100 XP
-```
-
-Investigate unusual login activity and identify the suspicious IP address.
-
-### Mission 02
+The mission supports up to **2 hints**.
 
 ```text
-THREAT DETECTION
-Hidden IOC
-MEDIUM
-250 XP
+0 Hints → 100 XP
+1 Hint  →  75 XP
+2 Hints →  50 XP
 ```
 
-Examine system evidence and discover the Indicator of Compromise.
-
-### Mission 03
+After successful completion:
 
 ```text
-INCIDENT RESPONSE
-Compromised Server
-HARD
-500 XP
+Submit → Disabled
+Input  → Disabled
+Hints  → Disabled
 ```
-
-Analyze multiple pieces of evidence and reconstruct a server compromise.
-
----
-
-# 🎨 Design
-
-CYBERLAB keeps the original dark cybersecurity-inspired interface.
-
-The current design uses:
-
-* Dark background
-* High-contrast typography
-* Minimal borders
-* Mission cards
-* Monospace log evidence
-* Difficulty indicators
-* Interactive buttons
-* Responsive layouts
-
----
-
-# 📱 Responsive Design
-
-Mission cards adapt to smaller screens.
-
-Desktop:
-
-```text
-┌────────┐ ┌────────┐ ┌────────┐
-│   01   │ │   02   │ │   03   │
-└────────┘ └────────┘ └────────┘
-```
-
-Mobile:
-
-```text
-┌──────────────┐
-│      01      │
-└──────────────┘
-
-┌──────────────┐
-│      02      │
-└──────────────┘
-
-┌──────────────┐
-│      03      │
-└──────────────┘
-```
-
-The evidence/log container also supports horizontal scrolling.
 
 ---
 
 # 🛠️ Technologies
 
-## Current
+| Technology | Purpose                       |
+| ---------- | ----------------------------- |
+| HTML5      | Structure                     |
+| CSS3       | UI & Responsive Design        |
+| JavaScript | Frontend interaction          |
+| PHP        | Server-side validation        |
+| HTTP POST  | Client → Server communication |
+| JSON       | Server → Client responses     |
 
-| Technology | Purpose                         |
-| ---------- | ------------------------------- |
-| HTML5      | Page structure                  |
-| CSS3       | Layout and interface            |
-| JavaScript | Frontend interaction            |
-| PHP        | Backend answer validation       |
-| HTTP POST  | Client → Server communication   |
-| JSON       | Server → Client response format |
+### Not implemented yet
 
-## Not Implemented Yet
-
-| Technology             | Status |
-| ---------------------- | ------ |
-| MySQL                  | ⬜      |
-| Database               | ⬜      |
-| Authentication         | ⬜      |
-| Register / Login       | ⬜      |
-| Sessions               | ⬜      |
-| User Dashboard         | ⬜      |
-| Persistent XP          | ⬜      |
-| Persistent Progress    | ⬜      |
-| Python Security Engine | ⬜      |
+```text
+MySQL
+Database
+Register / Login
+Sessions
+User Dashboard
+Persistent XP
+Persistent Progress
+```
 
 ---
 
@@ -582,254 +194,38 @@ CYBERLAB/
 
 ---
 
-# 🧩 V2.0 Architecture
+# 🧩 Architecture
 
 ```text
                  CYBERLAB V2.0
-                       │
-        ┌──────────────┴──────────────┐
-        │                             │
-     FRONTEND                       BACKEND
-        │                             │
- HTML + CSS + JS                    PHP
-        │                             │
-        │          HTTP              │
-        └────────── POST ────────────►│
-                                      │
-                                Validate Answer
-                                      │
-                                      ▼
-                                    JSON
-                                      │
-                                      ▼
-                                  JavaScript
-                                      │
-                                      ▼
-                                  Update UI
+
+┌──────────────┐
+│   Browser    │
+│ HTML/CSS/JS  │
+└──────┬───────┘
+       │
+       │ POST
+       ▼
+┌──────────────┐
+│     PHP      │
+│ submit.php   │
+└──────┬───────┘
+       │
+       │ JSON
+       ▼
+┌──────────────┐
+│ JavaScript   │
+│  Update UI   │
+└──────────────┘
 ```
 
 ---
 
-# 🧠 What V2.0 Teaches
+# 🚀 Run Locally
 
-V2.0 is intentionally small.
+V2.0 requires a PHP-enabled server.
 
-The objective is not to build the complete platform yet.
-
-The objective is to understand:
-
-```text
-Client
-  ↓
-Request
-  ↓
-HTTP
-  ↓
-POST
-  ↓
-Server
-  ↓
-PHP
-  ↓
-Validation
-  ↓
-JSON Response
-  ↓
-Client
-```
-
-This establishes the foundation required for future backend development.
-
----
-
-# 🚧 What V2.0 Does NOT Have
-
-V2.0 is **not yet a full database-backed application**.
-
-There is currently no:
-
-```text
-❌ MySQL
-❌ Database
-❌ User Accounts
-❌ Register
-❌ Login
-❌ Logout
-❌ Sessions
-❌ User Dashboard
-❌ Persistent XP
-❌ Persistent Mission Progress
-```
-
-These features belong to later versions.
-
----
-
-# 🚀 Roadmap
-
-```text
-V1.0
-HTML + CSS + JavaScript
-Interactive Missions
-        │
-        ▼
-V2.0  ← CURRENT
-PHP Backend Foundation
-POST + fetch() + JSON
-Server-side Answer Validation
-        │
-        ▼
-V2.1
-MySQL + Database
-        │
-        ▼
-V2.2
-Authentication
-Register / Login / Sessions
-        │
-        ▼
-V2.3
-User Dashboard
-XP + Mission Progress
-        │
-        ▼
-V3
-Learning System
-Concepts + Examples + Labs
-        │
-        ▼
-V4
-Python Security Engine
-        │
-        ▼
-V5
-Security Tools
-        │
-        ▼
-V6
-Advanced Cyber Missions
-        │
-        ▼
-V7
-Gamification
-XP + Levels + Achievements
-        │
-        ▼
-V8+
-Advanced Cybersecurity Labs
-```
-
----
-
-# 📈 Version History
-
-## V1.0 — Interactive Frontend
-
-Implemented:
-
-* HTML structure
-* CSS design
-* Responsive layouts
-* Multi-page navigation
-* Missions
-* Evidence
-* Answer interface
-* JavaScript validation
-* Hint system
-* XP system
-* Mission completion state
-
----
-
-## V2.0 — PHP Backend Foundation
-
-### Added
-
-* PHP backend
-* `php/submit.php`
-* Client → Server communication
-* JavaScript `fetch()`
-* HTTP `POST`
-* PHP `$_POST`
-* JSON responses
-* `response.json()`
-* Basic server-side answer validation
-* Correct-answer storage on the server
-
-### Architecture Change
-
-```text
-V1
-
-Browser
-   ↓
-JavaScript
-   ↓
-Validation
-
-
-V2.0
-
-Browser
-   ↓
-JavaScript
-   ↓
-fetch()
-   ↓
-PHP
-   ↓
-Validation
-   ↓
-JSON
-   ↓
-JavaScript
-```
-
-### Important
-
-V2.0 does **not** include MySQL or authentication.
-
-Those are planned for later versions.
-
----
-
-# 📌 Current Status
-
-```text
-╔════════════════════════════════════╗
-║          CYBERLAB V2.0             ║
-╠════════════════════════════════════╣
-║ HTML                  ✅            ║
-║ CSS                   ✅            ║
-║ Responsive Design     ✅            ║
-║ JavaScript            ✅            ║
-║ Missions              ✅            ║
-║ Evidence              ✅            ║
-║ Answer Interaction    ✅            ║
-║ Hint System           ✅            ║
-║ XP System             ✅            ║
-║ PHP Backend           ✅            ║
-║ fetch()               ✅            ║
-║ HTTP POST             ✅            ║
-║ JSON                  ✅            ║
-║ Server Validation     ✅            ║
-╠════════════════════════════════════╣
-║ MySQL                 ⬜            ║
-║ Authentication        ⬜            ║
-║ Sessions              ⬜            ║
-║ User System           ⬜            ║
-╚════════════════════════════════════╝
-```
-
-**Current Version: V2.0 — PHP Backend Foundation**
-
----
-
-# ⚡ Run Locally
-
-CYBERLAB V2.0 requires a PHP-enabled local server because `submit.php` must be executed by PHP.
-
-With XAMPP, place the project inside:
+With **XAMPP**, place the project inside:
 
 ```text
 xampp/
@@ -837,23 +233,100 @@ xampp/
     └── CyberLab/
 ```
 
-Start:
+Start **Apache**, then open the project through the local server.
 
 ```text
-Apache
+http://localhost/CyberLab/
 ```
 
-Then access CYBERLAB through the local server rather than opening `index.html` directly.
+> Opening `index.html` directly with `file://` will not provide the PHP backend required by V2.0.
 
-The V2.0 architecture requires:
+---
+
+# 📊 Current Status
 
 ```text
-Browser
-   ↓
-Apache
-   ↓
-PHP
+V1.0
+├── HTML                ✅
+├── CSS                 ✅
+├── Responsive          ✅
+├── JavaScript          ✅
+├── Missions            ✅
+├── Evidence            ✅
+├── Answers             ✅
+├── Hints               ✅
+└── XP                  ✅
+
+V2.0
+├── PHP                 ✅
+├── fetch()             ✅
+├── POST                ✅
+├── JSON                ✅
+└── Server Validation   ✅
+
+V2.1
+└── MySQL               ⬜
 ```
+
+**Current Version: V2.0 — PHP Backend Foundation**
+
+---
+
+# 🗺️ Roadmap
+
+```text
+V1.0
+Interactive Frontend
+      │
+      ▼
+V2.0  ← CURRENT
+PHP Backend
+POST + fetch() + JSON
+      │
+      ▼
+V2.1
+MySQL + Database
+      │
+      ▼
+V2.2
+Authentication
+Register / Login / Sessions
+      │
+      ▼
+V2.3
+User Dashboard
+XP + Mission Progress
+      │
+      ▼
+V3
+Learning System
+      │
+      ▼
+V4
+Python Security Engine
+      │
+      ▼
+V5+
+Advanced Security Tools & Missions
+```
+
+---
+
+# 🧠 Why CYBERLAB?
+
+CYBERLAB is a long-term learning project combining:
+
+```text
+Web Development
+       +
+Backend Development
+       +
+Secure Coding
+       +
+Cybersecurity
+```
+
+The goal is to gradually transform a simple frontend prototype into a complete cybersecurity learning platform.
 
 ---
 
@@ -865,17 +338,11 @@ PHP
 </p>
 
 <p align="center">
-  <a href="https://github.com/localbtstudio-tech">
-    GitHub
-  </a>
+  <a href="https://github.com/localbtstudio-tech">GitHub</a>
   •
-  <a href="https://www.linkedin.com/in/hamza-weslati-9a99a8419/">
-    LinkedIn
-  </a>
+  <a href="https://www.linkedin.com/in/hamza-weslati-9a99a8419/">LinkedIn</a>
   •
-  <a href="https://localbtstudio-tech.github.io/Portfolio/">
-    Portfolio
-  </a>
+  <a href="https://localbtstudio-tech.github.io/Portfolio/">Portfolio</a>
 </p>
 
 ---
