@@ -7,15 +7,16 @@ const hintButton = document.getElementById("hint-button");
 const hint = document.getElementById("hint");
 
 
-const correctAnswer = "45.23.XX.XX";
 const missionScore = 100;
 const hintPenalty = 25;
+
 
 let score = 0;
 let completed = false;
 
 let hintIndex = 0;
 let hintsUsed = 0;
+
 
 const hints = [
     "Look at the login time.",
@@ -25,23 +26,19 @@ const hints = [
 
 hintButton.addEventListener("click", function () {
 
-   
     if (completed) {
         return;
     }
 
-    
     if (hintIndex < hints.length) {
 
         hint.textContent = hints[hintIndex];
 
         hintIndex++;
-
         hintsUsed++;
 
     }
 
-  
     if (hintIndex === hints.length) {
 
         hintButton.disabled = true;
@@ -52,44 +49,109 @@ hintButton.addEventListener("click", function () {
 });
 
 
-submitButton.addEventListener("click", function () {
+submitButton.addEventListener("click", async function () {
 
     if (completed) {
         return;
     }
 
-    const userAnswer = answerInput.value.trim().toLowerCase();
+
+    const userAnswer = answerInput.value.trim();
+
 
     if (userAnswer === "") {
 
         result.textContent = "⚠️ PLEASE ENTER AN ANSWER.";
+
         return;
+
     }
 
-    if (userAnswer === correctAnswer.toLowerCase()) {
-
-        score = Math.max(
-            0,
-            missionScore - (hintsUsed * hintPenalty)
-        );
-
-        completed = true;
-        
-        result.textContent = "✅ CORRECT! MISSION COMPLETED.";
-
-        scoreDisplay.textContent = `Score: ${score} XP`;
+    submitButton.disabled = true;
+    submitButton.textContent = "CHECKING...";
 
 
-        submitButton.disabled = true;
-        submitButton.textContent = "MISSION COMPLETED";
+    try {
 
-        answerInput.disabled = true;
-        hintButton.disabled = true;
+        /* Send answer to PHP */
+
+        const response = await fetch("php/submit.php", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+
+            body: new URLSearchParams({
+                answer: userAnswer
+            })
+
+        });
 
 
-    } else {
+        /* Check HTTP response */
 
-        result.textContent = "❌ WRONG ANSWER. TRY AGAIN.";
+        if (!response.ok) {
+            throw new Error("Server error");
+        }
+
+
+        /* Convert JSON response into JavaScript object */
+
+        const data = await response.json();
+
+
+        /* Check PHP result */
+
+        if (data.correct) {
+
+            score = Math.max(
+                0,
+                missionScore - (hintsUsed * hintPenalty)
+            );
+
+            completed = true;
+
+
+            result.textContent =
+                "✅ CORRECT! MISSION COMPLETED.";
+
+
+            scoreDisplay.textContent =
+                `Score: ${score} XP`;
+
+
+            submitButton.textContent =
+                "MISSION COMPLETED";
+
+
+            answerInput.disabled = true;
+            hintButton.disabled = true;
+
+
+        } else {
+
+            result.textContent =
+                "❌ WRONG ANSWER. TRY AGAIN.";
+
+
+            submitButton.disabled = false;
+            submitButton.textContent =
+                "SUBMIT ANSWER";
+
+        }
+
+    } catch (error) {
+
+        result.textContent =
+            "⚠️ SERVER ERROR. PLEASE TRY AGAIN.";
+
+        submitButton.disabled = false;
+        submitButton.textContent =
+            "SUBMIT ANSWER";
+
+        console.error(error);
 
     }
 
