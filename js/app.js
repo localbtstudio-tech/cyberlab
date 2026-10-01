@@ -93,7 +93,7 @@ submitButton.addEventListener("click", async function () {
         /* Check HTTP response */
 
         if (!response.ok) {
-            throw new Error("Server error");
+            throw new Error(    );
         }
 
 
