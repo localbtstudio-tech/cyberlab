@@ -1,181 +1,123 @@
-# 🛡️ CYBERLAB
+# 🔐 CYBERLAB
 
-<p align="center">
-  <strong>Interactive Cybersecurity Missions</strong><br>
-  Investigate evidence. Analyze incidents. Solve cybersecurity challenges.
-</p>
+### Interactive Cybersecurity Learning Platform
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Version-V2.0-111111?style=for-the-badge">
-  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
-  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
-  <img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white">
-</p>
+CYBERLAB is an interactive cybersecurity learning platform built around practical investigation missions.
+
+The project is designed as a learning environment where cybersecurity concepts are implemented through **Frontend, Backend, Databases, and Security practices**.
 
 ---
 
-## ◼︎ About
+## 🚀 V2.1 — Database
 
-**CYBERLAB** is an interactive cybersecurity learning platform built around practical investigation missions.
+V2.1 introduces **MariaDB** and connects the PHP backend to a real database.
 
-Users analyze evidence, answer questions, use hints, and earn XP based on their performance.
+### Added
 
-The project is developed progressively, introducing new technologies only when they have a practical purpose.
+* 🗄️ MariaDB database with XAMPP
+* 📋 `missions` table
+* ❓ `questions` table
+* 🔗 Relationship between missions and questions
+* 🔐 Prepared Statements
+* 🧮 Server-side score calculation
+* 💾 Database SQL backup
+* 🔌 PHP ↔ MariaDB connection
 
 ---
 
-# ✦ V2.0 — PHP Backend Foundation
+## 🧩 Mission System
 
-V2.0 introduces the first **Backend layer** to CYBERLAB.
-
-### V1
+Each mission is stored in the database with information such as:
 
 ```text
-Browser
-   ↓
-JavaScript
-   ↓
-Answer Validation
+Mission
+├── ID
+├── Title
+├── Category
+├── Difficulty
+├── Points
+└── Hint Penalty
 ```
 
-### V2.0
+Questions are connected to missions through `mission_id`.
 
 ```text
-Browser
+Mission
    ↓
-JavaScript
+Question
    ↓
-fetch()
+Correct Answer
    ↓
-PHP
-   ↓
-Validate Answer
-   ↓
-JSON
-   ↓
-JavaScript
-```
-
-The main goal of V2.0 is learning practical **Client → Server communication**.
-
----
-
-# ⚙️ V2.0 Features
-
-* PHP backend with `submit.php`
-* JavaScript `fetch()`
-* HTTP `POST` requests
-* PHP `$_POST`
-* JSON responses
-* Server-side answer validation
-* Frontend mission interaction
-* Hint system
-* XP calculation
-* Responsive design
-
-### Answer Flow
-
-```text
-User Answer
-     ↓
-fetch()
-     ↓
-POST / php/submit.php
-     ↓
 PHP Validation
-     ↓
-JSON Response
-     ↓
-Update UI
-```
-
-The correct answer is now stored in PHP instead of being exposed in the JavaScript validation logic.
-
----
-
-# 🧪 Mission System
-
-Current missions:
-
-| #  | Category          | Mission            | Difficulty |  XP |
-| -- | ----------------- | ------------------ | ---------- | --: |
-| 01 | Log Analysis      | Suspicious Login   | Easy       | 100 |
-| 02 | Threat Detection  | Hidden IOC         | Medium     | 250 |
-| 03 | Incident Response | Compromised Server | Hard       | 500 |
-
-### Mission Flow
-
-```text
-MISSION
    ↓
-SCENARIO
-   ↓
-EVIDENCE
-   ↓
-QUESTION
-   ↓
-ANSWER
-   ↓
-VALIDATION
-   ↓
-XP
-   ↓
-COMPLETED
+Final Score
 ```
 
 ---
 
-# 💡 Hint & XP System
+## 🔐 Security
 
-The mission supports up to **2 hints**.
+CYBERLAB uses **Prepared Statements** for database queries instead of directly inserting user input into SQL statements.
 
-```text
-0 Hints → 100 XP
-1 Hint  →  75 XP
-2 Hints →  50 XP
-```
-
-After successful completion:
+The backend uses:
 
 ```text
-Submit → Disabled
-Input  → Disabled
-Hints  → Disabled
+prepare()
+bind_param()
+execute()
 ```
+
+This provides a safer foundation for future database features.
 
 ---
 
-# 🛠️ Technologies
+## 🧮 Server-Side Score
 
-| Technology | Purpose                       |
-| ---------- | ----------------------------- |
-| HTML5      | Structure                     |
-| CSS3       | UI & Responsive Design        |
-| JavaScript | Frontend interaction          |
-| PHP        | Server-side validation        |
-| HTTP POST  | Client → Server communication |
-| JSON       | Server → Client responses     |
-
-### Not implemented yet
+Score calculation was moved from JavaScript to PHP.
 
 ```text
-MySQL
-Database
-Register / Login
-Sessions
-User Dashboard
-Persistent XP
-Persistent Progress
+points
+   +
+hint_penalty
+   +
+hints_used
+        ↓
+      PHP
+        ↓
+   Final Score
 ```
+
+Example:
+
+```text
+100 XP → No hints
+ 75 XP → 1 hint
+ 50 XP → 2 hints
+```
+
+The server now controls the final result instead of relying entirely on the client.
 
 ---
 
-# 📂 Project Structure
+## 🛠️ Technologies
+
+| Layer           | Technologies            |
+| --------------- | ----------------------- |
+| Frontend        | HTML · CSS · JavaScript |
+| Backend         | PHP 8.2                 |
+| Database        | MariaDB                 |
+| Server          | Apache · XAMPP          |
+| Database Tool   | phpMyAdmin              |
+| Communication   | Fetch API · POST · JSON |
+| Security        | Prepared Statements     |
+| Version Control | Git · GitHub            |
+
+---
+
+## 📁 Project Structure
 
 ```text
 CYBERLAB/
-│
 ├── index.html
 ├── missions.html
 ├── mission.html
@@ -187,167 +129,130 @@ CYBERLAB/
 │   └── app.js
 │
 ├── php/
+│   ├── config.php
 │   └── submit.php
+│
+├── database/
+│   └── cyberlab.sql
 │
 └── README.md
 ```
 
 ---
 
-# 🧩 Architecture
+## 🏗️ Architecture
 
 ```text
-                 CYBERLAB V2.0
-
-┌──────────────┐
-│   Browser    │
-│ HTML/CSS/JS  │
-└──────┬───────┘
-       │
-       │ POST
-       ▼
-┌──────────────┐
-│     PHP      │
-│ submit.php   │
-└──────┬───────┘
-       │
-       │ JSON
-       ▼
-┌──────────────┐
-│ JavaScript   │
-│  Update UI   │
-└──────────────┘
+Browser
+   │
+   ▼
+JavaScript
+   │
+   │ fetch() / POST
+   ▼
+PHP
+   │
+   ▼
+MariaDB
+   │
+   ├── missions
+   └── questions
+   │
+   ▼
+PHP Validation
+   │
+   ▼
+JSON Response
+   │
+   ▼
+JavaScript
+   │
+   ▼
+Final Score
 ```
 
 ---
 
-# 🚀 Run Locally
+## ▶️ Run Locally
 
-V2.0 requires a PHP-enabled server.
+CYBERLAB currently runs through **XAMPP**.
 
-With **XAMPP**, place the project inside:
+Place the project inside:
 
 ```text
-xampp/
-└── htdocs/
-    └── CyberLab/
+C:\xampp82\htdocs\CyberLab
 ```
 
-Start **Apache**, then open the project through the local server.
+Start:
+
+```text
+Apache
+MariaDB
+```
+
+Then open:
 
 ```text
 http://localhost/CyberLab/
 ```
 
-> Opening `index.html` directly with `file://` will not provide the PHP backend required by V2.0.
-
----
-
-# 📊 Current Status
+Import the database using:
 
 ```text
-V1.0
-├── HTML                ✅
-├── CSS                 ✅
-├── Responsive          ✅
-├── JavaScript          ✅
-├── Missions            ✅
-├── Evidence            ✅
-├── Answers             ✅
-├── Hints               ✅
-└── XP                  ✅
-
-V2.0
-├── PHP                 ✅
-├── fetch()             ✅
-├── POST                ✅
-├── JSON                ✅
-└── Server Validation   ✅
-
-V2.1
-└── MySQL               ⬜
-```
-
-**Current Version: V2.0 — PHP Backend Foundation**
-
----
-
-# 🗺️ Roadmap
-
-```text
-V1.0
-Interactive Frontend
-      │
-      ▼
-V2.0  ← CURRENT
-PHP Backend
-POST + fetch() + JSON
-      │
-      ▼
-V2.1
-MySQL + Database
-      │
-      ▼
-V2.2
-Authentication
-Register / Login / Sessions
-      │
-      ▼
-V2.3
-User Dashboard
-XP + Mission Progress
-      │
-      ▼
-V3
-Learning System
-      │
-      ▼
-V4
-Python Security Engine
-      │
-      ▼
-V5+
-Advanced Security Tools & Missions
+phpMyAdmin
+→ Import
+→ database/cyberlab.sql
 ```
 
 ---
 
-# 🧠 Why CYBERLAB?
-
-CYBERLAB is a long-term learning project combining:
+## 📊 Current Status
 
 ```text
-Web Development
-       +
-Backend Development
-       +
-Secure Coding
-       +
-Cybersecurity
+CYBERLAB V2.1
+│
+├── Frontend              ✅
+├── JavaScript            ✅
+├── PHP Backend           ✅
+├── Fetch / POST / JSON   ✅
+├── MariaDB               ✅
+├── Missions Database     ✅
+├── Questions Database    ✅
+├── Prepared Statements   ✅
+├── Server-side Score     ✅
+└── User System           ⬜
 ```
 
-The goal is to gradually transform a simple frontend prototype into a complete cybersecurity learning platform.
+---
+
+## 🛣️ Roadmap
+
+```text
+V1.0  → Interactive Missions              ✅
+V2.0  → PHP Backend Foundation            ✅
+V2.1  → MariaDB Database                  ✅
+V2.2  → Users + Register                  🚧
+V2.3  → Login + Sessions                  ⬜
+V2.4  → Progress + XP                     ⬜
+V2.5  → User Dashboard                    ⬜
+```
 
 ---
 
-# 👨‍💻 Author
+## 🎯 Project Goal
 
-<p align="center">
-  <strong>Hamza Weslati</strong><br>
-  IT Student · Web Developer · Software Development
-</p>
+CYBERLAB is being developed as a practical learning project to combine:
 
-<p align="center">
-  <a href="https://github.com/localbtstudio-tech">GitHub</a>
-  •
-  <a href="https://www.linkedin.com/in/hamza-weslati-9a99a8419/">LinkedIn</a>
-  •
-  <a href="https://localbtstudio-tech.github.io/Portfolio/">Portfolio</a>
-</p>
+**Software Development + Web Development + Databases + Cybersecurity**
+
+The goal is to progressively transform a simple interactive mission into a complete cybersecurity learning platform.
 
 ---
 
-<p align="center">
-  <strong>CYBERLAB V2.0</strong><br>
-  Learn. Investigate. Build.
-</p>
+## 👤 Author
+
+**Hamza Weslati**
+
+IT Student · Software Development · Cybersecurity Learner
+
+[GitHub](https://github.com/localbtstudio-tech)
