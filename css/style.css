@@ -389,3 +389,55 @@ a {
         font-size: 12px;
     }
 }
+
+.auth-page {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 100px 20px;
+}
+
+.auth-header {
+    margin-bottom: 40px;
+}
+
+.auth-header h1 {
+    margin: 15px 0;
+    font-size: 56px;
+    letter-spacing: 5px;
+}
+
+.auth-header p:not(.section-label) {
+    color: #888;
+    line-height: 1.6;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.auth-form label {
+    margin-top: 10px;
+    color: #888;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.auth-form input {
+    padding: 15px;
+    background: #111;
+    color: #fff;
+    border: 1px solid #333;
+    outline: none;
+}
+
+.auth-form input:focus {
+    border-color: #666;
+}
+
+.auth-form #result {
+    margin-top: 15px;
+    color: #aaa;
+}
