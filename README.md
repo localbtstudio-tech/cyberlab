@@ -1,78 +1,97 @@
 # 🧪 CYBERLAB
 
-> Interactive cybersecurity lab for solving challenges, analyzing evidence, and learning security concepts.
+<p align="center">
+  <strong>Interactive cybersecurity lab for solving challenges, analyzing evidence, and learning security concepts.</strong>
+</p>
+
+<p align="center">
+  <strong>HTML · CSS · JavaScript · PHP · MariaDB · Sessions</strong>
+</p>
+
+<p align="center">
+
+![PHP](https://img.shields.io/badge/PHP-8.2-777BB4?logo=php\&logoColor=white)
+![MariaDB](https://img.shields.io/badge/MariaDB-Database-003545?logo=mariadb\&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6-F7DF1E?logo=javascript\&logoColor=black)
+![XAMPP](https://img.shields.io/badge/XAMPP-Local_Server-FB7A24?logo=xampp\&logoColor=white)
+![Version](https://img.shields.io/badge/Version-2.3-red)
+![Status](https://img.shields.io/badge/Status-In_Development-yellow)
+
+</p>
 
 ---
 
-## 🚀 Version 2.1 — Database
+## ◼︎ Project Overview
 
-V2.1 introduces MariaDB database integration and connects the PHP backend to persistent mission data.
+**CYBERLAB** is an interactive cybersecurity learning platform built around practical missions and security challenges.
 
-### Added
-
-* MariaDB database
-* `missions` table
-* `questions` table
-* Mission/question relationship
-* Prepared Statements
-* Server-side score calculation
-* PHP ↔ MariaDB integration
-* Database SQL backup
+The project evolved from a static JavaScript application into a **PHP + MariaDB application** with user authentication and sessions.
 
 ---
 
-## 🏗️ Architecture
+## ✦ V2.3 Features
 
 ```text
-Browser
-   │
-   ├── HTML / CSS
-   └── JavaScript
-          │
-          ▼
-        PHP
-          │
-          ▼
-       MariaDB
-          │
-     ┌────┴────┐
-     ▼         ▼
- missions   questions
+CYBERLAB V2.3
+│
+├── Interactive Missions
+├── PHP Backend
+├── MariaDB Database
+├── User Registration
+├── User Login
+├── Password Hashing
+├── Password Verification
+├── PHP Sessions
+├── Session ID Regeneration
+└── Prepared Statements
 ```
 
-### Mission Flow
+### Authentication Flow
 
 ```text
-Mission
+Register
    ↓
-Question
+users
    ↓
-mission_id
+Login
    ↓
-PHP
+password_verify()
    ↓
-Database
+Session
    ↓
-Correct Answer
-   ↓
-Score
+Authenticated User
 ```
 
 ---
 
-## 🔐 Database Security
-
-Database queries use **Prepared Statements** instead of directly building SQL queries with user input.
+## 🏗️ Project Structure
 
 ```text
-prepare()
-   ↓
-bind_param()
-   ↓
-execute()
+CyberLab/
+│
+├── index.html
+├── missions.html
+├── mission.html
+├── register.html
+├── login.html
+│
+├── css/
+│   └── style.css
+│
+├── js/
+│   ├── app.js
+│   ├── register.js
+│   └── login.js
+│
+├── php/
+│   ├── config.php
+│   ├── submit.php
+│   ├── register.php
+│   └── login.php
+│
+└── database/
+    └── cyberlab.sql
 ```
-
-The backend also handles the final score calculation using database values.
 
 ---
 
@@ -89,44 +108,17 @@ The backend also handles the final score calculation using database values.
 
 ---
 
-## 📁 Project Structure
-
-```text
-CyberLab/
-│
-├── index.html
-├── missions.html
-├── mission.html
-│
-├── css/
-│   └── style.css
-│
-├── js/
-│   └── app.js
-│
-├── php/
-│   ├── config.php
-│   └── submit.php
-│
-├── database/
-│   └── cyberlab.sql
-│
-└── README.md
-```
-
----
-
 ## ⚙️ Setup
 
-1. Install XAMPP.
-2. Start Apache and MariaDB.
-3. Place CyberLab inside:
+Place the project inside:
 
 ```text
 C:\xampp82\htdocs\CyberLab
 ```
 
-4. Import:
+Start **Apache** and **MariaDB** in XAMPP.
+
+Import:
 
 ```text
 database/cyberlab.sql
@@ -134,7 +126,7 @@ database/cyberlab.sql
 
 into phpMyAdmin.
 
-5. Open:
+Then open:
 
 ```text
 http://localhost/CyberLab/
@@ -148,8 +140,8 @@ http://localhost/CyberLab/
 V1.0  → Interactive Mission Foundation      ✅
 V2.0  → PHP Backend                         ✅
 V2.1  → Database Integration                ✅
-V2.2  → User Registration                   ⬜
-V2.3  → Login + Sessions                    ⬜
+V2.2  → User Registration                   ✅
+V2.3  → Login + Sessions                    ✅
 ```
 
 ---
@@ -157,8 +149,6 @@ V2.3  → Login + Sessions                    ⬜
 ## 🗺️ Roadmap
 
 ```text
-V2.2 → User Registration
-V2.3 → Login + Sessions
 V2.4 → Logout + Protected Pages
 V2.5 → User Progress
 V2.6 → Persistent XP
@@ -174,4 +164,16 @@ V5.0 → Security Tools
 
 **Hamza Weslati**
 
-GitHub: `localbtstudio-tech`
+IT Student · Software Development · Cybersecurity Learner
+
+<p align="left">
+
+<a href="https://github.com/localbtstudio-tech">
+<img src="https://img.shields.io/badge/GitHub-localbtstudio--tech-black?logo=github">
+</a>
+
+<a href="https://www.linkedin.com/in/hamza-weslati-9a99a8419/">
+<img src="https://img.shields.io/badge/LinkedIn-Hamza%20Weslati-blue?logo=linkedin">
+</a>
+
+</p>
