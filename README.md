@@ -1,25 +1,23 @@
-````markdown
 # 🧪 CYBERLAB
 
 > Interactive cybersecurity lab for solving challenges, analyzing evidence, and learning security concepts.
 
 ---
 
-## 🚀 Version 2.3 — Authentication
+## 🚀 Version 2.1 — Database
 
-V2.3 adds user authentication and PHP sessions.
+V2.1 introduces MariaDB database integration and connects the PHP backend to persistent mission data.
 
 ### Added
 
-- User Registration
-- User Login
-- Password hashing with `password_hash()`
-- Password verification with `password_verify()`
-- PHP Sessions
-- Session ID regeneration
-- Protected authentication flow
-- JSON-based responses
-- MySQL/MariaDB integration
+* MariaDB database
+* `missions` table
+* `questions` table
+* Mission/question relationship
+* Prepared Statements
+* Server-side score calculation
+* PHP ↔ MariaDB integration
+* Database SQL backup
 
 ---
 
@@ -36,23 +34,45 @@ Browser
           │
           ▼
        MariaDB
-````
+          │
+     ┌────┴────┐
+     ▼         ▼
+ missions   questions
+```
 
-### Authentication Flow
+### Mission Flow
 
 ```text
-Register
+Mission
    ↓
-users table
+Question
    ↓
-Login
+mission_id
    ↓
-password_verify()
+PHP
    ↓
-Session
+Database
    ↓
-Authenticated User
+Correct Answer
+   ↓
+Score
 ```
+
+---
+
+## 🔐 Database Security
+
+Database queries use **Prepared Statements** instead of directly building SQL queries with user input.
+
+```text
+prepare()
+   ↓
+bind_param()
+   ↓
+execute()
+```
+
+The backend also handles the final score calculation using database values.
 
 ---
 
@@ -64,6 +84,7 @@ Authenticated User
 * PHP 8.2
 * MariaDB
 * XAMPP
+* phpMyAdmin
 * Git / GitHub
 
 ---
@@ -76,25 +97,21 @@ CyberLab/
 ├── index.html
 ├── missions.html
 ├── mission.html
-├── register.html
-├── login.html
 │
 ├── css/
 │   └── style.css
 │
 ├── js/
-│   ├── app.js
-│   └── register.js
-│   └── login.js
+│   └── app.js
 │
 ├── php/
 │   ├── config.php
-│   ├── submit.php
-│   ├── register.php
-│   └── login.php
+│   └── submit.php
 │
-└── database/
-    └── cyberlab.sql
+├── database/
+│   └── cyberlab.sql
+│
+└── README.md
 ```
 
 ---
@@ -131,8 +148,8 @@ http://localhost/CyberLab/
 V1.0  → Interactive Mission Foundation      ✅
 V2.0  → PHP Backend                         ✅
 V2.1  → Database Integration                ✅
-V2.2  → User Registration                   ✅
-V2.3  → Login + Sessions                    ✅
+V2.2  → User Registration                   ⬜
+V2.3  → Login + Sessions                    ⬜
 ```
 
 ---
@@ -140,6 +157,8 @@ V2.3  → Login + Sessions                    ✅
 ## 🗺️ Roadmap
 
 ```text
+V2.2 → User Registration
+V2.3 → Login + Sessions
 V2.4 → Logout + Protected Pages
 V2.5 → User Progress
 V2.6 → Persistent XP
@@ -156,45 +175,3 @@ V5.0 → Security Tools
 **Hamza Weslati**
 
 GitHub: `localbtstudio-tech`
-
-````
-
-### Git
-
-بما أنك عدّلت عدة ملفات في هذه النسخة، استخدم:
-
-```bash
-git status
-````
-
-ثم:
-
-```bash
-git add .
-```
-
-ثم الـcommit message الذي أنصح به:
-
-```bash
-git commit -m "Add login and session authentication"
-```
-
-ثم:
-
-```bash
-git push
-```
-
-في GitHub سيكون التاريخ واضحًا:
-
-```text
-V1
- ↓
-V2.0 PHP Backend
- ↓
-V2.1 Database
- ↓
-V2.2 Registration
- ↓
-V2.3 Login + Sessions
-```
