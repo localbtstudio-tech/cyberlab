@@ -102,8 +102,8 @@ $stmt->close();
 /* ================================= */
 
 $passwordHash = password_hash(
-    $passPASSWORD_DEFAULTword,
-    
+    $password,
+    PASSWORD_DEFAULT
 );
 
 
