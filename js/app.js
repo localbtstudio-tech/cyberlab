@@ -156,3 +156,48 @@ submitButton.addEventListener("click", async function () {
     }
 
 });
+
+
+aasync function checkAuth() {
+
+    try {
+
+        const response = await fetch("php/auth.php");
+
+
+        if (!response.ok) {
+
+            throw new Error("Server error");
+
+        }
+
+
+        const data = await response.json();
+
+
+        if (data.success) {
+
+            const userId = data.user_id;
+            const username = data.username;
+
+
+            console.log("User ID:", userId);
+            console.log("Username:", username);
+
+        } else {
+
+            console.log("User is not logged in.");
+
+        }
+
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+checkAuth();
