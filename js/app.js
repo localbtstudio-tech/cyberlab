@@ -158,7 +158,7 @@ submitButton.addEventListener("click", async function () {
 });
 
 
-aasync function checkAuth() {
+async function checkAuth() {
 
     try {
 
@@ -174,21 +174,7 @@ aasync function checkAuth() {
 
         const data = await response.json();
 
-
-        if (data.success) {
-
-            const userId = data.user_id;
-            const username = data.username;
-
-
-            console.log("User ID:", userId);
-            console.log("Username:", username);
-
-        } else {
-
-            console.log("User is not logged in.");
-
-        }
+        updateNavbar(data);
 
 
     } catch (error) {
@@ -200,4 +186,32 @@ aasync function checkAuth() {
 }
 
 
+function updateNavbar(data) {
+
+    const loginLink = document.getElementById("loginLink");
+    const userInfo = document.getElementById("userInfo");
+    const logoutLink = document.getElementById("logoutLink");
+
+
+    if (data.success) {
+
+        loginLink.style.display = "none";
+
+        userInfo.textContent =
+            `Welcome, ${data.username}`;
+
+        logoutLink.style.display = "inline";
+
+
+    } else {
+
+        loginLink.style.display = "inline";
+
+        userInfo.textContent = "";
+
+        logoutLink.style.display = "none";
+
+    }
+
+}
 checkAuth();
