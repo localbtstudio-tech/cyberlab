@@ -215,3 +215,36 @@ function updateNavbar(data) {
 
 }
 checkAuth();
+
+const logoutLink = document.getElementById("logoutLink");
+
+logoutLink.addEventListener("click", function(event) {
+
+    event.preventDefault();
+
+    logout();
+
+});
+
+async function logout() {
+
+    try {
+
+        const response = await fetch("php/logout.php");
+
+        if (!response.ok) {
+            throw new Error("Server error");
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+            checkAuth();
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+}
