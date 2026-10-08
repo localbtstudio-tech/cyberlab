@@ -22,7 +22,14 @@
         <nav class="nav-links">
             <a href="index.html">HOME</a>
             <a href="missions.html" class="active">MISSIONS</a>
-            <a href="#">ABOUT</a>
+
+            <a href="login.html" id="loginLink">LOGIN</a>
+
+            <span id="userInfo"></span>
+
+            <a href="#" id="aboutLink">ABOUT</a>
+
+            <a href="#" id="logoutLink">LOGOUT</a>
         </nav>
 
     </header>
@@ -136,46 +143,9 @@
     </main>
 
     <script src="js/app.js"></script>
+    <script src="js/mission.js"></script>
 
-        <script>
-            async function protectMission(){
-            
-            
-            try {
-
-        // fetch auth.php
-
-                const reponse = await fetch ("php/auth.php");
-        
-                // check response
-
-                if(!reponse.ok){
-
-                    throw new Error("serveur error");
-
-                }   
-
-
-                const data = await reponse.json();
-
-
-                if(!data.success){
-
-                   window.location.href = "login.html";
-                   
-                }
-
-
-    } catch (error) {
-
-        console.error(error);
-
-    }
-        }
-
-    protectMission();
-    
-        </script>
+       
 </body>
 
 </html>
