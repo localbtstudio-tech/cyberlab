@@ -137,6 +137,45 @@
 
     <script src="js/app.js"></script>
 
+        <script>
+            async function protectMission(){
+            
+            
+            try {
+
+        // fetch auth.php
+
+                const reponse = await fetch ("php/auth.php");
+        
+                // check response
+
+                if(!reponse.ok){
+
+                    throw new Error("serveur error");
+
+                }   
+
+
+                const data = await reponse.json();
+
+
+                if(!data.success){
+
+                   window.location.href = "login.html";
+                   
+                }
+
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+        }
+
+    protectMission();
+    
+        </script>
 </body>
 
 </html>
