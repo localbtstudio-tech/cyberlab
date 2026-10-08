@@ -1,0 +1,194 @@
+const answerInput = document.getElementById("answer-input");
+const submitButton = document.getElementById("submit-button");
+const result = document.getElementById("result");
+const scoreDisplay = document.getElementById("score");
+
+const hintButton = document.getElementById("hint-button");
+const hint = document.getElementById("hint");
+
+
+const missionScore = 100;
+const hintPenalty = 25;
+
+
+let score = 0;
+let completed = false;
+
+let hintIndex = 0;
+let hintsUsed = 0;
+
+
+const hints = [
+    "Look at the login time.",
+    "Check whether the IP is internal or external."
+];
+
+
+hintButton.addEventListener("click", function () {
+
+    if (completed) {
+        return;
+    }
+
+    if (hintIndex < hints.length) {
+
+        hint.textContent = hints[hintIndex];
+
+        hintIndex++;
+        hintsUsed++;
+
+    }
+
+    if (hintIndex === hints.length) {
+
+        hintButton.disabled = true;
+        hintButton.textContent = "NO MORE HINTS";
+
+    }
+
+});
+
+
+submitButton.addEventListener("click", async function () {
+
+    if (completed) {
+        return;
+    }
+
+
+    const userAnswer = answerInput.value.trim();
+
+
+    if (userAnswer === "") {
+
+        result.textContent = "⚠️ PLEASE ENTER AN ANSWER.";
+
+        return;
+
+    }
+
+    submitButton.disabled = true;
+    submitButton.textContent = "CHECKING...";
+
+
+    try {
+
+        /* Send answer to PHP */
+
+        const response = await fetch("php/submit.php", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+
+            body: new URLSearchParams({
+                answer: userAnswer
+            })
+
+        });
+
+
+        /* Check HTTP response */
+
+        if (!response.ok) {
+            throw new Error("Server error");
+        }
+
+
+        /* Convert JSON response into JavaScript object */
+
+        const data = await response.json();
+
+
+        /* Check PHP result */
+
+        if (data.correct) {
+
+            score = Math.max(
+                0,
+                missionScore - (hintsUsed * hintPenalty)
+            );
+
+            completed = true;
+
+
+            result.textContent =
+                "✅ CORRECT! MISSION COMPLETED.";
+
+
+            scoreDisplay.textContent =
+                `Score: ${score} XP`;
+
+
+            submitButton.textContent =
+                "MISSION COMPLETED";
+
+
+            answerInput.disabled = true;
+            hintButton.disabled = true;
+
+
+        } else {
+
+            result.textContent =
+                "❌ WRONG ANSWER. TRY AGAIN.";
+
+
+            submitButton.disabled = false;
+            submitButton.textContent =
+                "SUBMIT ANSWER";
+
+        }
+
+    } catch (error) {
+
+        result.textContent =
+            "⚠️ SERVER ERROR. PLEASE TRY AGAIN.";
+
+        submitButton.disabled = false;
+        submitButton.textContent =
+            "SUBMIT ANSWER";
+
+        console.error(error);
+
+    }
+
+});
+
+
+async function protectMission(){
+            
+            
+            try {
+
+
+                const reponse = await fetch ("php/auth.php");
+        
+
+                if(!reponse.ok){
+
+                    throw new Error("serveur error");
+
+                }   
+
+
+                const data = await reponse.json();
+
+
+                if(!data.success){
+
+                   window.location.href = "login.html";
+
+                }
+
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+        }
+
+    protectMission();
