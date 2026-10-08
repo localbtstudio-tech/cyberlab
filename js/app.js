@@ -248,3 +248,13 @@ async function logout() {
 
     }
 }
+
+const logoutLink = document.getElementById("logoutLink");
+
+logoutLink.addEventListener("click", async function(event) {
+
+    event.preventDefault();
+
+    await logout();
+
+});
