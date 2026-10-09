@@ -1,194 +1,304 @@
-const answerInput = document.getElementById("answer-input");
-const submitButton = document.getElementById("submit-button");
-const result = document.getElementById("result");
-const scoreDisplay = document.getElementById("score");
 
-const hintButton = document.getElementById("hint-button");
-const hint = document.getElementById("hint");
+/* ================================= */
+/* PROTECT MISSION                   */
+/* ================================= */
 
-
-const missionScore = 100;
-const hintPenalty = 25;
-
-
-let score = 0;
-let completed = false;
-
-let hintIndex = 0;
-let hintsUsed = 0;
-
-
-const hints = [
-    "Look at the login time.",
-    "Check whether the IP is internal or external."
-];
-
-
-hintButton.addEventListener("click", function () {
-
-    if (completed) {
-        return;
-    }
-
-    if (hintIndex < hints.length) {
-
-        hint.textContent = hints[hintIndex];
-
-        hintIndex++;
-        hintsUsed++;
-
-    }
-
-    if (hintIndex === hints.length) {
-
-        hintButton.disabled = true;
-        hintButton.textContent = "NO MORE HINTS";
-
-    }
-
-});
-
-
-submitButton.addEventListener("click", async function () {
-
-    if (completed) {
-        return;
-    }
-
-
-    const userAnswer = answerInput.value.trim();
-
-
-    if (userAnswer === "") {
-
-        result.textContent = "⚠️ PLEASE ENTER AN ANSWER.";
-
-        return;
-
-    }
-
-    submitButton.disabled = true;
-    submitButton.textContent = "CHECKING...";
-
+async function protectMission() {
 
     try {
 
-        /* Send answer to PHP */
-
-        const response = await fetch("php/submit.php", {
-
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-
-            body: new URLSearchParams({
-                answer: userAnswer
-            })
-
-        });
-
-
-        /* Check HTTP response */
+        const response = await fetch("php/auth.php");
 
         if (!response.ok) {
-            throw new Error("Server error");
+            throw new Error("Authentication server error.");
         }
-
-
-        /* Convert JSON response into JavaScript object */
 
         const data = await response.json();
 
+        if (!data.success) {
 
-        /* Check PHP result */
+            window.location.replace("login.html");
 
-        if (data.correct) {
-
-            score = Math.max(
-                0,
-                missionScore - (hintsUsed * hintPenalty)
-            );
-
-            completed = true;
-
-
-            result.textContent =
-                "✅ CORRECT! MISSION COMPLETED.";
-
-
-            scoreDisplay.textContent =
-                `Score: ${score} XP`;
-
-
-            submitButton.textContent =
-                "MISSION COMPLETED";
-
-
-            answerInput.disabled = true;
-            hintButton.disabled = true;
-
-
-        } else {
-
-            result.textContent =
-                "❌ WRONG ANSWER. TRY AGAIN.";
-
-
-            submitButton.disabled = false;
-            submitButton.textContent =
-                "SUBMIT ANSWER";
-
+            return false;
         }
+
+        return true;
 
     } catch (error) {
 
-        result.textContent =
-            "⚠️ SERVER ERROR. PLEASE TRY AGAIN.";
+        console.error("Authentication error:", error);
 
-        submitButton.disabled = false;
-        submitButton.textContent =
-            "SUBMIT ANSWER";
+        const result = document.getElementById("result");
 
-        console.error(error);
+        if (result) {
+            result.textContent =
+                "Unable to verify login. Please try again.";
+        }
 
+        return false;
+    }
+}
+
+
+/* ================================= */
+/* INITIALIZE MISSION                */
+/* ================================= */
+
+async function initializeMission() {
+
+    // Verify authentication before enabling mission logic.
+
+    const isAuthenticated = await protectMission();
+
+    if (!isAuthenticated) {
+        return;
     }
 
-});
+
+    /* ================================= */
+    /* GET HTML ELEMENTS                 */
+    /* ================================= */
+
+    const answerInput =
+        document.getElementById("answer-input");
+
+    const submitButton =
+        document.getElementById("submit-button");
+
+    const result =
+        document.getElementById("result");
+
+    const scoreDisplay =
+        document.getElementById("score");
+
+    const hintButton =
+        document.getElementById("hint-button");
+
+    const hint =
+        document.getElementById("hint");
 
 
-async function protectMission(){
-            
-            
+    /* ================================= */
+    /* VALIDATE HTML ELEMENTS            */
+    /* ================================= */
+
+    if (
+        !answerInput ||
+        !submitButton ||
+        !result ||
+        !scoreDisplay ||
+        !hintButton ||
+        !hint
+    ) {
+
+        console.error("Mission HTML elements are missing.");
+
+        return;
+    }
+
+
+    /* ================================= */
+    /* GET MISSION ID                    */
+    /* ================================= */
+
+    const missionId =
+        Number(document.body.dataset.missionId);
+
+    if (
+        !Number.isInteger(missionId) ||
+        missionId <= 0
+    ) {
+
+        result.textContent =
+            "Mission configuration error. Invalid mission ID.";
+
+        submitButton.disabled = true;
+        hintButton.disabled = true;
+
+        console.error("Invalid mission ID:", missionId);
+
+        return;
+    }
+
+
+    /* ================================= */
+    /* MISSION VARIABLES                 */
+    /* ================================= */
+
+    let completed = false;
+    let hintIndex = 0;
+
+    const hints = [
+        "Look at the login time.",
+        "Check whether the IP is internal or external."
+    ];
+
+
+    /* ================================= */
+    /* SHOW HINTS                        */
+    /* ================================= */
+
+    hintButton.addEventListener("click", function () {
+
+        if (completed) {
+            return;
+        }
+
+        if (hintIndex < hints.length) {
+
+            hint.textContent = hints[hintIndex];
+
+            hintIndex++;
+        }
+
+        if (hintIndex >= hints.length) {
+
+            hintButton.disabled = true;
+
+            hintButton.textContent = "NO MORE HINTS";
+        }
+
+    });
+
+
+  
+    submitButton.addEventListener(
+        "click",
+        async function () {
+
+            if (completed) {
+                return;
+            }
+
+            const userAnswer =
+                answerInput.value.trim();
+
+            if (userAnswer === "") {
+
+                result.textContent =
+                    "⚠️ PLEASE ENTER AN ANSWER.";
+
+                return;
+            }
+
+            submitButton.disabled = true;
+
+            submitButton.textContent = "CHECKING...";
+
+
             try {
 
+                /* Send answer and mission ID to PHP */
 
-                const reponse = await fetch ("php/auth.php");
-        
+                
+                const response = await fetch(
+                    "php/submit.php",
+                    {
+                        method: "POST",
 
-                if(!reponse.ok){
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
 
-                    throw new Error("serveur error");
+                        body: new URLSearchParams({
+                            answer: userAnswer,
+                            mission_id: String(missionId)
+                        })
+                    }
+                );
 
-                }   
 
 
-                const data = await reponse.json();
+                /* Convert JSON response into an object */
+
+                const data = await response.json();
 
 
-                if(!data.success){
+                /* Check authentication again */
 
-                   window.location.href = "login.html";
+                if (response.status === 401) {
 
+                    window.location.replace("login.html");
+
+                    return;
                 }
 
 
-    } catch (error) {
+                /* Handle other server errors */
 
-        console.error(error);
+                if (!response.ok) {
 
-    }
+                    result.textContent =
+                        `⚠️ ${data.message || "Request failed."}`;
+
+                    return;
+                }
+
+
+                /* Check the answer */
+
+                if (data.correct) {
+
+                    const serverScore = Number(data.score);
+
+                    if (!Number.isFinite(serverScore)) {
+                        throw new Error("Invalid score received.");
+                    }
+
+                    completed = true;
+
+
+                    result.textContent =
+                        "✅ CORRECT! MISSION COMPLETED.";
+
+
+                    // Display the score returned by PHP.
+
+                    scoreDisplay.textContent =
+                        `Score: ${serverScore} XP`;
+
+
+                    submitButton.textContent =
+                        "MISSION COMPLETED";
+
+
+                    answerInput.disabled = true;
+
+                    hintButton.disabled = true;
+
+
+                } else {
+
+                    result.textContent =
+                        data.message === "WRONG"
+                            ? "❌ WRONG ANSWER. TRY AGAIN."
+                            : `⚠️ ${data.message || "Incorrect answer."}`;
+
+                }
+
+            } catch (error) {
+
+                console.error("Submission error:", error);
+
+                result.textContent =
+                    "⚠️ SERVER ERROR. PLEASE TRY AGAIN.";
+
+            } finally {
+
+                if (!completed) {
+
+                    submitButton.disabled = false;
+
+                    submitButton.textContent =
+                        "SUBMIT ANSWER";
+                }
+            }
+
         }
+    );
 
-    protectMission();
+}
+
+
+
+initializeMission();
