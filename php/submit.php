@@ -1,28 +1,74 @@
+
 <?php
 
 header("Content-Type: application/json");
 
 require "config.php";
 
+session_start();
+
+
+/* ================================= */
+/* CHECK AUTHENTICATION               */
+/* ================================= */
+
+if (!isset($_SESSION["user_id"])) {
+
+    http_response_code(401);
+
+    echo json_encode([
+        "correct" => false,
+        "message" => "You must log in first."
+    ]);
+
+    exit;
+}
+
+
+/* ================================= */
+/* VALIDATE REQUEST METHOD            */
+/* ================================= */
+
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+
+    http_response_code(405);
+
+    echo json_encode([
+        "correct" => false,
+        "message" => "Method not allowed."
+    ]);
+
+    exit;
+}
+
 
 /* ================================= */
 /* GET DATA FROM REQUEST              */
 /* ================================= */
 
-$answer = trim(strtolower($_POST["answer"] ?? ""));
-$missionId = (int) ($_POST["mission_id"] ?? 0);
-$hintsUsed = (int) ($_POST["hints_used"] ?? 0);
+$answer = trim(
+    strtolower($_POST["answer"] ?? "")
+);
+
+$missionId = filter_input(INPUT_POST, "mission_id", FILTER_VALIDATE_INT);
 
 
 /* ================================= */
 /* VALIDATE INPUT                     */
 /* ================================= */
 
-if ($answer === "" || $missionId <= 0) {
+if (
+    $answer === "" ||
+    $missionId === false ||
+    $missionId === null ||
+    $missionId <= 0
+) {
+
+    http_response_code(400);
 
     echo json_encode([
         "correct" => false,
-        "message" => "Invalid request"
+        "message" => "Invalid request."
     ]);
 
     exit;
@@ -45,8 +91,19 @@ $sql = "
     LIMIT 1
 ";
 
-
 $stmt = $conn->prepare($sql);
+
+if (!$stmt) {
+
+    http_response_code(500);
+
+    echo json_encode([
+        "correct" => false,
+        "message" => "Database error."
+    ]);
+
+    exit;
+}
 
 $stmt->bind_param("i", $missionId);
 
@@ -65,15 +122,18 @@ $stmt->bind_result(
 
 if (!$stmt->fetch()) {
 
+    http_response_code(404);
+
     echo json_encode([
         "correct" => false,
-        "message" => "Mission not found"
+        "message" => "Mission not found."
     ]);
 
     $stmt->close();
+    $conn->close();
+
     exit;
 }
-
 
 $stmt->close();
 
@@ -82,18 +142,21 @@ $stmt->close();
 /* CHECK ANSWER                       */
 /* ================================= */
 
-$correctAnswer = strtolower(trim($correctAnswer));
-
+$correctAnswer = strtolower(
+    trim($correctAnswer)
+);
 
 if ($answer === $correctAnswer) {
 
-    $hintsUsed = max(0, $hintsUsed);
+    /*
+     * The server calculates the score.
+     * Do not trust a score supplied by JavaScript.
+     *
+     * Hint usage must also be tracked and verified
+     * by the server before applying a penalty.
+     */
 
-    $score = max(
-        0,
-        $missionScore - ($hintsUsed * $hintPenalty)
-    );
-
+    $score = max(0, (int) $missionScore);
 
     echo json_encode([
         "correct" => true,
@@ -109,3 +172,7 @@ if ($answer === $correctAnswer) {
     ]);
 
 }
+
+$conn->close();
+
+?>
