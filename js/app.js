@@ -11,7 +11,6 @@ async function checkAuth() {
 
         }
 
-
         const data = await response.json();
 
         updateNavbar(data);
@@ -27,33 +26,34 @@ async function checkAuth() {
 
 
 function updateNavbar(data) {
-
     const loginLink = document.getElementById("loginLink");
+    const registerLink = document.getElementById("registerLink");
     const userInfo = document.getElementById("userInfo");
     const logoutLink = document.getElementById("logoutLink");
 
+    const loggedIn = data.success === true;
 
-    if (data.success) {
-
-        loginLink.style.display = "none";
-
-        userInfo.textContent =
-            `Welcome, ${data.username}`;
-
-        logoutLink.style.display = "inline";
-
-
-    } else {
-
-        loginLink.style.display = "inline";
-
-        userInfo.textContent = "";
-
-        logoutLink.style.display = "none";
-
+    if (loginLink) {
+        loginLink.style.display = loggedIn ? "none" : "inline";
     }
 
+    if (registerLink) {
+        registerLink.style.display = loggedIn ? "none" : "inline";
+    }
+
+    if (userInfo) {
+        userInfo.textContent = loggedIn
+            ? `Welcome, ${data.username}`
+            : "";
+
+        userInfo.style.display = loggedIn ? "inline" : "none";
+    }
+
+    if (logoutLink) {
+        logoutLink.style.display = loggedIn ? "inline" : "none";
+    }
 }
+
 checkAuth();
 
 
@@ -89,3 +89,5 @@ logoutLink.addEventListener("click", async function(event) {
     await logout();
 
 });
+
+
