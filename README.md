@@ -1,179 +1,170 @@
-# 🧪 CYBERLAB
+# CYBERLAB — Interactive Cybersecurity Lab
 
-<p align="center">
-  <strong>Interactive cybersecurity lab for solving challenges, analyzing evidence, and learning security concepts.</strong>
-</p>
+**Learn cybersecurity by investigating, analyzing evidence, and solving interactive security missions.**
 
-<p align="center">
-  <strong>HTML · CSS · JavaScript · PHP · MariaDB · Sessions</strong>
-</p>
+CYBERLAB is a web-based cybersecurity learning project designed to make security concepts more practical through interactive challenges. Users can explore missions, investigate suspicious activity, submit answers, and receive scores.
 
-<p align="center">
+The project is being developed incrementally, starting with user authentication and database-connected missions, with plans to introduce more advanced security exercises and tools.
 
-![PHP](https://img.shields.io/badge/PHP-8.2-777BB4?logo=php\&logoColor=white)
-![MariaDB](https://img.shields.io/badge/MariaDB-Database-003545?logo=mariadb\&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-ES6-F7DF1E?logo=javascript\&logoColor=black)
-![XAMPP](https://img.shields.io/badge/XAMPP-Local_Server-FB7A24?logo=xampp\&logoColor=white)
-![Version](https://img.shields.io/badge/Version-2.3-red)
-![Status](https://img.shields.io/badge/Status-In_Development-yellow)
+## Features
 
-</p>
+### Authentication
+- User registration and login.
+- Password hashing and verification using PHP.
+- Session-based authentication.
+- Logout functionality.
+- Protected mission access.
 
----
+### Interactive Missions
+- Cybersecurity scenarios and evidence.
+- Log-analysis challenge: **Suspicious Login**.
+- Interactive hints.
+- Server-side answer verification using PHP and MySQL.
+- Score feedback after a correct answer.
 
-## ◼︎ Project Overview
+### Backend and Database
+- MySQL database integration.
+- Prepared statements for database queries.
+- Server-side validation of mission submissions.
+- Mission questions and scoring data retrieved from the database.
 
-**CYBERLAB** is an interactive cybersecurity learning platform built around practical missions and security challenges.
+## Technologies
 
-The project evolved from a static JavaScript application into a **PHP + MariaDB application** with user authentication and sessions.
+- **HTML5** — Page structure
+- **CSS3** — Styling and responsive layouts
+- **JavaScript** — Interactive behavior and HTTP requests
+- **PHP 8** — Authentication and backend logic
+- **MySQL** — User accounts, missions, and questions
+- **XAMPP** — Local Apache and MySQL development environment
+- **Git & GitHub** — Version control and source hosting
 
----
-
-## ✦ V2.3 Features
-
-```text
-CYBERLAB V2.3
-│
-├── Interactive Missions
-├── PHP Backend
-├── MariaDB Database
-├── User Registration
-├── User Login
-├── Password Hashing
-├── Password Verification
-├── PHP Sessions
-├── Session ID Regeneration
-└── Prepared Statements
-```
-
-### Authentication Flow
-
-```text
-Register
-   ↓
-users
-   ↓
-Login
-   ↓
-password_verify()
-   ↓
-Session
-   ↓
-Authenticated User
-```
-
----
-
-## 🏗️ Project Structure
+## Project Structure
 
 ```text
 CyberLab/
-│
+├── css/
+│   └── style.css
+├── js/
+│   ├── app.js
+│   └── mission.js
+├── php/
+│   ├── config.php
+│   ├── auth.php
+│   ├── login.php
+│   ├── logout.php
+│   └── submit.php
+├── database/
+│   └── cyberlab.sql
 ├── index.html
 ├── missions.html
 ├── mission.html
-├── register.html
 ├── login.html
-│
-├── css/
-│   └── style.css
-│
-├── js/
-│   ├── app.js
-│   ├── register.js
-│   └── login.js
-│
-├── php/
-│   ├── config.php
-│   ├── submit.php
-│   ├── register.php
-│   └── login.php
-│
-└── database/
-    └── cyberlab.sql
+├── register.html
+└── README.md
 ```
 
----
+## Getting Started
 
-## 🛠️ Technologies
+### Requirements
 
-* HTML
-* CSS
-* JavaScript
-* PHP 8.2
-* MariaDB
-* XAMPP
-* phpMyAdmin
-* Git / GitHub
+- [XAMPP](https://www.apachefriends.org/)
+- PHP 8.x
+- MySQL or MariaDB
+- A modern web browser
+- Git (optional, for cloning the repository)
 
----
+### 1. Clone the Repository
 
-## ⚙️ Setup
+```bash
+git clone https://github.com/localbtstudio-tech/CyberLab.git
+```
 
-Place the project inside:
+Place the project inside your XAMPP `htdocs` directory. For example:
 
 ```text
 C:\xampp82\htdocs\CyberLab
 ```
 
-Start **Apache** and **MariaDB** in XAMPP.
+### 2. Start XAMPP
 
-Import:
+Open the XAMPP Control Panel and start:
 
-```text
-database/cyberlab.sql
-```
+- Apache
+- MySQL
 
-into phpMyAdmin.
+### 3. Create the Database
 
-Then open:
+Open phpMyAdmin:
 
-```text
-http://localhost/CyberLab/
-```
+[http://localhost/phpmyadmin](http://localhost/phpmyadmin)
 
----
-
-## 📌 Current Status
+Create a database named:
 
 ```text
-V1.0  → Interactive Mission Foundation      ✅
-V2.0  → PHP Backend                         ✅
-V2.1  → Database Integration                ✅
-V2.2  → User Registration                   ✅
-V2.3  → Login + Sessions                    ✅
+cyberlab
 ```
 
----
+Import the SQL backup from `database/cyberlab.sql` if it contains the current database schema.
 
-## 🗺️ Roadmap
+If your local schema has newer changes than the backup, update the backup before relying on it for a fresh installation.
+
+### 4. Configure the Database Connection
+
+Open:
 
 ```text
-V2.4 → Logout + Protected Pages
-V2.5 → User Progress
-V2.6 → Persistent XP
-V2.7 → User Dashboard
-V3.0 → Learning System
-V4.0 → Python Security Engine
-V5.0 → Security Tools
+php/config.php
 ```
 
----
+Configure the MySQL host, database name, username, and password for your local environment. Do not publish real database credentials.
 
-## 👤 Author
+### 5. Launch CYBERLAB
+
+Open the project through Apache:
+
+[http://localhost/CyberLab/index.html](http://localhost/CyberLab/index.html)
+
+Register an account, log in, and visit the Missions page to try the Suspicious Login challenge.
+
+**Important:** Do not open the project using `file:///`. PHP features require the project to run through a web server.
+
+## Current Mission
+
+### Mission 01 — Suspicious Login
+
+**Category:** Log Analysis  
+**Difficulty:** Easy  
+**Base Score:** 100 XP
+
+A company detects unusual login activity on an internal system. The user investigates the supplied login records and identifies the suspicious IP address.
+
+The answer is checked by the PHP backend against the question stored in MySQL.
+
+## Development Roadmap
+
+- [x] Build the initial pages and navigation.
+- [x] Implement user registration and login.
+- [x] Add session-based authentication.
+- [x] Protect mission access.
+- [x] Connect mission answer submission to PHP and MySQL.
+- [x] Return server-validated answer results and scores.
+- [ ] Persist completed missions and scores in the database.
+- [ ] Build a user progress dashboard.
+- [ ] Track hint usage and calculate penalties on the server.
+- [ ] Add more interactive cybersecurity missions.
+- [ ] Introduce Python-powered security analysis tools.
+- [ ] Expand the lab with more advanced challenges.
+
+## Project Status
+
+**Actively in development.**
+
+CYBERLAB currently provides the foundation for an interactive cybersecurity lab, including authentication and a database-connected mission. Persistent user progress, score history, and additional security tools remain planned development work.
+
+## Author
 
 **Hamza Weslati**
 
-IT Student · Software Development · Cybersecurity Learner
+IT/DSI Student | Web Development | Cybersecurity
 
-<p align="left">
-
-<a href="https://github.com/localbtstudio-tech">
-<img src="https://img.shields.io/badge/GitHub-localbtstudio--tech-black?logo=github">
-</a>
-
-<a href="https://www.linkedin.com/in/hamza-weslati-9a99a8419/">
-<img src="https://img.shields.io/badge/LinkedIn-Hamza%20Weslati-blue?logo=linkedin">
-</a>
-
-</p>
+- GitHub: [@localbtstudio-tech](https://github.com/localbtstudio-tech)
