@@ -25,7 +25,9 @@ async function checkAuth() {
 }
 
 
+
 function updateNavbar(data) {
+
     const loginLink = document.getElementById("loginLink");
     const registerLink = document.getElementById("registerLink");
     const userInfo = document.getElementById("userInfo");
@@ -34,11 +36,11 @@ function updateNavbar(data) {
     const loggedIn = data.success === true;
 
     if (loginLink) {
-        loginLink.style.display = loggedIn ? "none" : "inline";
+        loginLink.hidden = loggedIn;
     }
 
     if (registerLink) {
-        registerLink.style.display = loggedIn ? "none" : "inline";
+        registerLink.hidden = loggedIn;
     }
 
     if (userInfo) {
@@ -46,13 +48,14 @@ function updateNavbar(data) {
             ? `Welcome, ${data.username}`
             : "";
 
-        userInfo.style.display = loggedIn ? "inline" : "none";
+        userInfo.hidden = !loggedIn;
     }
 
     if (logoutLink) {
-        logoutLink.style.display = loggedIn ? "inline" : "none";
+        logoutLink.hidden = !loggedIn;
     }
 }
+
 
 checkAuth();
 
