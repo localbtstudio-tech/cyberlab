@@ -25,6 +25,10 @@ a {
     border-bottom: 1px solid #222;
 }
 
+.site-header [hidden] {
+    display: none !important;
+}
+
 .logo {
     color: #ffffff;
     font-size: 20px;
