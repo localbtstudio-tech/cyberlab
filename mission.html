@@ -13,26 +13,58 @@
 <body data-mission-id="1">
 
     
-    <header class="site-header">
+    
+<header class="site-header">
+    <div class="header-inner">
 
         <a href="index.html" class="logo">
-            CYBERLAB
+            <span class="logo-icon">C</span>
+            <span class="logo-text">CYBER<span>LAB</span></span>
         </a>
 
-        <nav class="nav-links">
-            <a href="index.html">HOME</a>
-            <a href="missions.html" class="active">MISSIONS</a>
+        <nav class="nav-links" aria-label="Main navigation">
 
-            <a href="login.html" id="loginLink">LOGIN</a>
+            <a href="index.html" class="nav-link">
+                HOME
+            </a>
 
-            <span id="userInfo"></span>
+            <a href="missions.html" class="nav-link">
+                MISSIONS
+            </a>
 
-            <a href="index.html#about" id="aboutLink">ABOUT</a>
+            <a href="index.html#about"
+               id="aboutLink"
+               class="nav-link">
+                ABOUT
+            </a>
 
-            <a href="#" id="logoutLink">LOGOUT</a>
+            <a href="login.html"
+               id="loginLink"
+               class="nav-link">
+                LOGIN
+            </a>
+
+            <a href="register.html"
+               id="registerLink"
+               class="nav-cta">
+                REGISTER NOW
+            </a>
+
+            <span id="userInfo"
+                  class="user-info"
+                  hidden></span>
+
+            <a href="#"
+               id="logoutLink"
+               class="nav-cta nav-logout"
+               hidden>
+                LOGOUT
+            </a>
+
         </nav>
+    </div>
+</header>
 
-    </header>
 
 
     <main>
