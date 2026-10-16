@@ -138,6 +138,7 @@ if (!$stmt->fetch()) {
 $stmt->close();
 
 
+
 /* ================================= */
 /* CHECK ANSWER                       */
 /* ================================= */
@@ -148,20 +149,131 @@ $correctAnswer = strtolower(
 
 if ($answer === $correctAnswer) {
 
-    /*
-     * The server calculates the score.
-     * Do not trust a score supplied by JavaScript.
-     *
-     * Hint usage must also be tracked and verified
-     * by the server before applying a penalty.
-     */
+    // Get the authenticated user's ID from the session.
+
+    $userId = (int) $_SESSION["user_id"];
+
+    // Calculate the score on the server.
 
     $score = max(0, (int) $missionScore);
+
+
+    /* ================================= */
+    /* SAVE USER PROGRESS                */
+    /* ================================= */
+
+    $saveSql = "
+        INSERT INTO user_progress (
+            user_id,
+            mission_id,
+            score
+        )
+        VALUES (?, ?, ?)
+        ON DUPLICATE KEY UPDATE
+            score = user_progress.score
+    ";
+
+    $saveStmt = $conn->prepare($saveSql);
+
+    if (!$saveStmt) {
+
+        http_response_code(500);
+
+        echo json_encode([
+            "correct" => false,
+            "message" => "Could not save progress."
+        ]);
+
+        $conn->close();
+        exit;
+    }
+
+    $saveStmt->bind_param(
+        "iii",
+        $userId,
+        $missionId,
+        $score
+    );
+
+    if (!$saveStmt->execute()) {
+
+        http_response_code(500);
+
+        echo json_encode([
+            "correct" => false,
+            "message" => "Could not save progress."
+        ]);
+
+        $saveStmt->close();
+        $conn->close();
+        exit;
+    }
+
+    $saveStmt->close();
+
+
+    /* ================================= */
+    /* GET SAVED SCORE                   */
+    /* ================================= */
+
+    $scoreSql = "
+        SELECT score
+        FROM user_progress
+        WHERE user_id = ?
+          AND mission_id = ?
+        LIMIT 1
+    ";
+
+    $scoreStmt = $conn->prepare($scoreSql);
+
+    if (!$scoreStmt) {
+
+        http_response_code(500);
+
+        echo json_encode([
+            "correct" => false,
+            "message" => "Could not retrieve saved score."
+        ]);
+
+        $conn->close();
+        exit;
+    }
+
+    $scoreStmt->bind_param(
+        "ii",
+        $userId,
+        $missionId
+    );
+
+    $scoreStmt->execute();
+
+    $scoreStmt->bind_result($savedScore);
+
+    if (!$scoreStmt->fetch()) {
+
+        http_response_code(500);
+
+        echo json_encode([
+            "correct" => false,
+            "message" => "Progress record not found."
+        ]);
+
+        $scoreStmt->close();
+        $conn->close();
+        exit;
+    }
+
+    $scoreStmt->close();
+
+
+    /* ================================= */
+    /* RETURN RESULT                     */
+    /* ================================= */
 
     echo json_encode([
         "correct" => true,
         "message" => "CORRECT",
-        "score" => $score
+        "score" => (int) $savedScore
     ]);
 
 } else {
@@ -172,7 +284,3 @@ if ($answer === $correctAnswer) {
     ]);
 
 }
-
-$conn->close();
-
-?>
